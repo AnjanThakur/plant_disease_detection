@@ -31,27 +31,20 @@ class EarlyStopping:
             if self.counter >= self.patience:
                 self.early_stop = True
 
-def load_checkpoint(model):
-    checkpoint_path = 'best_model.pth'  # Update the correct path if needed
-    
-    if os.path.isfile(checkpoint_path):
-        print(f"Loading checkpoint from {checkpoint_path}")
-        # Load only the model state_dict
-        model.load_state_dict(torch.load(checkpoint_path, map_location='cpu'))
-        return model
-    else:
-        print(f"No checkpoint found at {checkpoint_path}, starting training from scratch.")
-        return model
 
-def train_model(model, train_loader, val_loader, num_epochs=30, device='cpu'):
+def train_model(model, train_loader, val_loader, num_epochs=30, device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')):
     model.to(device)  # Ensure model is on the correct device
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
     scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3, verbose=True)  # Define scheduler
 
-    # Load the best model if a checkpoint exists
-    model = load_checkpoint(model)  # Load checkpoint and model weights
-    
+    # Load checkpoint if exists
+    if os.path.exists('best_model.pth'):
+        print("Loading checkpoint...")
+        model.load_state_dict(torch.load('best_model.pth', map_location=device))
+    else:
+        print("No checkpoint found, starting fresh training.")
+
     total_start_time = time.time()
     early_stopping = EarlyStopping(patience=5)  # Initialize early stopping
 
@@ -130,50 +123,42 @@ def train_model(model, train_loader, val_loader, num_epochs=30, device='cpu'):
     total_time = time.time() - total_start_time
     print(f'Training completed in {total_time/60:.2f} minutes')
 
+
 def main():
-    # Set up paths
+    # Paths
     base_path = Path('data')
     train_path = base_path / 'train'
     test_path = base_path / 'test'
-    
+
     print("Training on CPU")
-    
-    # Get transforms
-    train_transform, val_transform = get_transforms()  # Import from dataset.py
-    
-    # Create datasets and dataloaders with CPU-optimized settings
+    device = 'cpu'
+
+    # Transforms
+    train_transform, val_transform = get_transforms()
+
+    # Datasets and loaders
     train_dataset = PlantDataset(train_path, transform=train_transform)
     test_dataset = PlantDataset(test_path, transform=val_transform)
-    
-    # Use WeightedRandomSampler for class imbalance
+
     labels = [label for _, label in train_dataset]
     class_counts = Counter(labels)
     class_weights = [1.0 / class_counts[label] for label in labels]
     sampler = WeightedRandomSampler(class_weights, len(class_weights))
 
-    # DataLoaders
     train_loader = torch.utils.data.DataLoader(
-        train_dataset,
-        batch_size=16,  # Smaller batch size for CPU
-        sampler=sampler,  # Balanced sampling
-        num_workers=1,  # Reduced workers for CPU
-        pin_memory=False  # Disabled for CPU
+        train_dataset, batch_size=32, sampler=sampler, num_workers=2, pin_memory=False
     )
-    
+
     val_loader = torch.utils.data.DataLoader(
-        test_dataset,
-        batch_size=16,
-        shuffle=False,
-        num_workers=1,
-        pin_memory=False
+        test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=False
     )
-    
+
     # Initialize model
     num_classes = len(train_dataset.classes)
     model = CNN(num_classes=num_classes)
 
-    # Train model from scratch or resume from checkpoint
+    # Train model
     train_model(model, train_loader, val_loader)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

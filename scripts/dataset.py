@@ -29,7 +29,6 @@ class PlantDataset(torch.utils.data.Dataset):
                             self.samples.append((str(img_path), self.class_to_idx[class_dir.name]))
                     except Exception as e:
                         logging.error(f"Error loading image {img_path}: {str(e)}")
-                        # Skip the image if there's an error loading it
 
     def __len__(self):
         return len(self.samples)
@@ -44,7 +43,6 @@ class PlantDataset(torch.utils.data.Dataset):
                 return img, label
         except Exception as e:
             logging.error(f"Error loading image {img_path}: {str(e)}")
-            # Skip the image if it can't be loaded
             return self.__getitem__((idx + 1) % len(self))
 
 class CannyEdgeDetection:

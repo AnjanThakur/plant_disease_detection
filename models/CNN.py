@@ -7,17 +7,17 @@ class CNN(nn.Module):
         super(CNN, self).__init__()
 
         # Using pre-trained ResNet50 as feature extractor
-        resnet = models.resnet50(pretrained=True)
-        
+        resnet = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
+
         # Remove the fully connected layers (classifier part) from ResNet
         self.features = nn.Sequential(*list(resnet.children())[:-1])
-        
+
         # Add new classifier layers
         self.classifier = nn.Sequential(
             nn.Linear(resnet.fc.in_features, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
-            nn.Linear(512, num_classes) 
+            nn.Linear(512, num_classes)
         )
 
     def forward(self, x):
