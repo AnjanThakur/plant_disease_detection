@@ -1,15 +1,40 @@
-import torch
 import os
+import logging
+import numpy as np
+import torch
+import time
 from torch.optim import AdamW
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from tqdm.auto import tqdm
-import time
 from pathlib import Path
 from models.CNN import CNN
 from scripts.dataset import get_transforms, PlantDataset
 from torch.utils.data.sampler import WeightedRandomSampler
 from collections import Counter
 from sklearn.metrics import precision_score, recall_score, f1_score
+import random
+
+# Initialize logging
+logging.basicConfig(level=logging.ERROR)
+
+# MixUp data augmentation technique
+def mixup_data(x, y, alpha=1.0):
+    """Returns mixed inputs, pairs of targets, and lambda."""
+    if alpha > 0.:
+        lam = np.random.beta(alpha, alpha)
+    else:
+        lam = 1.
+
+    batch_size = x.size(0)
+    index = torch.randperm(batch_size).cuda()
+
+    mixed_x = lam * x + (1 - lam) * x[index, :]
+    y_a, y_b = y, y[index]
+    return mixed_x, y_a, y_b, lam
+
+def mixup_criterion(criterion, pred, y_a, y_b, lam):
+    """Returns the MixUp loss."""
+    return lam * criterion(pred, y_a) + (1 - lam) * criterion(pred, y_b)
 
 class EarlyStopping:
     def __init__(self, patience=5):
@@ -64,15 +89,22 @@ def train_model(model, train_loader, val_loader, num_epochs=30):
         for inputs, targets in batch_pbar:
             inputs, targets = inputs.to(device), targets.to(device)  # Move data to GPU/CPU
             optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, targets)
+
+            # Apply MixUp
+            mixed_inputs, targets_a, targets_b, lam = mixup_data(inputs, targets)
+
+            # Forward pass with mixed inputs
+            outputs = model(mixed_inputs)
+
+            # Calculate MixUp loss
+            loss = mixup_criterion(criterion, outputs, targets_a, targets_b, lam)
             loss.backward()
             optimizer.step()
 
             train_loss += loss.item()
             _, predicted = outputs.max(1)
             total += targets.size(0)
-            correct += predicted.eq(targets).sum().item()
+            correct += predicted.eq(targets_a).sum().item()  # Use the original targets (targets_a)
 
             # Update batch progress bar
             batch_pbar.set_postfix({'loss': f'{train_loss/total:.3f}', 'acc': f'{100.*correct/total:.2f}%'})
