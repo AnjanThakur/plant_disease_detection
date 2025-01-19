@@ -31,12 +31,15 @@ class EarlyStopping:
             if self.counter >= self.patience:
                 self.early_stop = True
 
+def train_model(model, train_loader, val_loader, num_epochs=30):
+    # Ensure GPU is used if available
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"Training on {device}")
+    model.to(device)  # Move model to the selected device
 
-def train_model(model, train_loader, val_loader, num_epochs=30, device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')):
-    model.to(device)  # Ensure model is on the correct device
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
-    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3, verbose=True)  # Define scheduler
+    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3, verbose=True)
 
     # Load checkpoint if exists
     if os.path.exists('best_model.pth'):
@@ -46,7 +49,7 @@ def train_model(model, train_loader, val_loader, num_epochs=30, device = torch.d
         print("No checkpoint found, starting fresh training.")
 
     total_start_time = time.time()
-    early_stopping = EarlyStopping(patience=5)  # Initialize early stopping
+    early_stopping = EarlyStopping(patience=5)
 
     for epoch in range(num_epochs):
         epoch_start_time = time.time()
@@ -59,7 +62,7 @@ def train_model(model, train_loader, val_loader, num_epochs=30, device = torch.d
         batch_pbar = tqdm(train_loader, desc=f'Epoch {epoch+1}/{num_epochs}', leave=False, position=1)
 
         for inputs, targets in batch_pbar:
-            inputs, targets = inputs.to(device), targets.to(device)  # Move data to the correct device
+            inputs, targets = inputs.to(device), targets.to(device)  # Move data to GPU/CPU
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, targets)
@@ -111,27 +114,22 @@ def train_model(model, train_loader, val_loader, num_epochs=30, device = torch.d
         scheduler.step(f1)
 
         # Early stopping check
-        early_stopping(val_loss, model, f1)  # Trigger early stopping based on F1 score
+        early_stopping(val_loss, model, f1)
         if early_stopping.early_stop:
             print("Early stopping triggered.")
-            break  # Stop the training loop if early stopping is triggered
+            break
 
-        # Print and update progress
         epoch_time = time.time() - epoch_start_time
         print(f'Epoch {epoch+1}/{num_epochs} - Loss: {train_loss/total:.4f} - Val Acc: {val_acc:.2f}% - Time: {epoch_time:.2f}s')
 
     total_time = time.time() - total_start_time
     print(f'Training completed in {total_time/60:.2f} minutes')
 
-
 def main():
     # Paths
     base_path = Path('data')
     train_path = base_path / 'train'
     test_path = base_path / 'test'
-
-    print("Training on CPU")
-    device = 'cpu'
 
     # Transforms
     train_transform, val_transform = get_transforms()
@@ -146,11 +144,11 @@ def main():
     sampler = WeightedRandomSampler(class_weights, len(class_weights))
 
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=32, sampler=sampler, num_workers=2, pin_memory=False
+        train_dataset, batch_size=32, sampler=sampler, num_workers=2, pin_memory=True
     )
 
     val_loader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=False
+        test_dataset, batch_size=32, shuffle=False, num_workers=2, pin_memory=True
     )
 
     # Initialize model
