@@ -1,0 +1,10 @@
+
+PyTorch for model training and deep learning tasks.
+TorchVision for image transformations and model support.
+TQDM for progress bars.
+OpenCV for Canny edge detection.
+Pillow for image handling.
+NumPy for array operations.
+Scikit-learn for potential metrics and evaluation.
+Pandas for any data handling (if used in other parts of the project).
+Matplotlib for plotting, if needed.
