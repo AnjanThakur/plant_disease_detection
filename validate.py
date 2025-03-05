@@ -66,7 +66,7 @@ def main():
     print(f"Number of class names: {len(class_names)}")
 
     # Load the trained model
-    model = CNN(num_classes=len(class_names))
+    model = CNN(num_classes=len(class_names))  # Make sure this matches the dataset
     model.load_state_dict(torch.load('C:/Users/HP/Desktop/plant_disease_detection/best_model.pth', map_location=torch.device('cpu')))
     print("\nModel loaded successfully!")
 
