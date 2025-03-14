@@ -7,44 +7,220 @@ from torchvision import transforms
 import cv2
 import torch
 import random
+import argparse
 
-# Initialize logging
-logging.basicConfig(level=logging.ERROR)
+
+# Initialize logging with more detail
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def analyze_dataset_structure(root_dir):
+    """
+    Analyzes the structure of a dataset directory to verify class folders and image files.
+    """
+    root = Path(root_dir)
+    
+    if not root.exists():
+        logging.error(f"Dataset directory does not exist: {root}")
+        return [], {}
+    
+    logging.info(f"Analyzing dataset directory: {root}")
+    
+    # Get all subdirectories (class folders)
+    class_dirs = [d for d in root.iterdir() if d.is_dir()]
+    logging.info(f"Found {len(class_dirs)} potential class directories")
+    
+    if len(class_dirs) == 0:
+        logging.error("No class directories found!")
+        return [], {}
+    
+    # Analyze each class directory
+    valid_classes = []
+    class_images = {}
+    valid_extensions = {'.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'}
+    
+    for class_dir in sorted(class_dirs):
+        class_name = class_dir.name
+        logging.info(f"\nAnalyzing class: {class_name}")
+        
+        # Get all image files with expanded extensions
+        image_files = []
+        for ext in valid_extensions:
+            image_files.extend(list(class_dir.glob(f"*{ext}")))
+        
+        # Check for empty directories
+        if len(image_files) == 0:
+            logging.warning(f"No valid images found in class directory: {class_name}")
+            continue
+        
+        # Verify images can be opened
+        valid_images = 0
+        invalid_images = []
+        
+        for img_path in image_files:
+            try:
+                with Image.open(img_path) as img:
+                    img.verify()  # Verify the file is valid
+                    valid_images += 1
+            except Exception as e:
+                invalid_images.append((img_path, str(e)))
+        
+        logging.info(f"  Total images found: {len(image_files)}")
+        logging.info(f"  Valid images: {valid_images}")
+        logging.info(f"  Invalid images: {len(invalid_images)}")
+        
+        if valid_images > 0:
+            valid_classes.append(class_name)
+            class_images[class_name] = valid_images
+            
+            if invalid_images:
+                for path, error in invalid_images[:5]:  # Show first 5 errors
+                    logging.warning(f"    - {path.name}: {error}")
+                if len(invalid_images) > 5:
+                    logging.warning(f"    ... and {len(invalid_images) - 5} more")
+        else:
+            logging.error(f"  No valid images in class: {class_name}")
+    
+    # Summary
+    logging.info("\n====== Dataset Summary ======")
+    logging.info(f"Total class directories found: {len(class_dirs)}")
+    logging.info(f"Valid classes with images: {len(valid_classes)}")
+    
+    if len(valid_classes) < len(class_dirs):
+        logging.warning("Some class directories have no valid images:")
+        for d in class_dirs:
+            if d.name not in valid_classes:
+                logging.warning(f"  - {d.name}")
+    
+    if valid_classes:
+        logging.info("\nClass distribution:")
+        total_images = sum(class_images.values())
+        for class_name, count in sorted(class_images.items(), key=lambda x: x[1], reverse=True):
+            logging.info(f"  {class_name}: {count} images ({count/total_images*100:.1f}%)")
+    
+    return valid_classes, class_images
+
+def compare_datasets(train_dir, test_dir):
+    """
+    Compares train and test datasets to ensure class consistency.
+    """
+    logging.info("\n====== Comparing Train and Test Datasets ======")
+    
+    train_classes, train_images = analyze_dataset_structure(train_dir)
+    test_classes, test_images = analyze_dataset_structure(test_dir)
+    
+    if not train_classes or not test_classes:
+        return
+    
+    # Find missing classes
+    train_set = set(train_classes)
+    test_set = set(test_classes)
+    
+    missing_in_test = train_set - test_set
+    missing_in_train = test_set - train_set
+    common_classes = train_set.intersection(test_set)
+    
+    logging.info(f"\nCommon classes: {len(common_classes)}")
+    logging.info(f"Classes in train but not in test: {len(missing_in_test)}")
+    if missing_in_test:
+        for cls in sorted(missing_in_test):
+            logging.warning(f"  - {cls}: {train_images.get(cls, 0)} train images, 0 test images")
+    
+    logging.info(f"Classes in test but not in train: {len(missing_in_train)}")
+    if missing_in_train:
+        for cls in sorted(missing_in_train):
+            logging.warning(f"  - {cls}: 0 train images, {test_images.get(cls, 0)} test images")
+    
+    # Analyze class distribution ratio
+    logging.info("\nTrain/Test Split Analysis:")
+    for cls in sorted(common_classes):
+        train_count = train_images.get(cls, 0)
+        test_count = test_images.get(cls, 0)
+        total = train_count + test_count
+        train_ratio = train_count / total * 100 if total > 0 else 0
+        test_ratio = test_count / total * 100 if total > 0 else 0
+        
+        logging.info(f"  {cls}: {train_count} train ({train_ratio:.1f}%), {test_count} test ({test_ratio:.1f}%)")
 
 class PlantDataset(torch.utils.data.Dataset):
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, transform=None, force_all_classes=False, class_list=None):
         self.root_dir = Path(root_dir)
         self.transform = transform
         self.samples = []
-        self.classes = sorted([d.name for d in self.root_dir.iterdir() if d.is_dir()])
-        self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
+        self.force_all_classes = force_all_classes
+        self.predefined_classes = class_list  # Add this line
         
-        # Load all image paths
-        for class_dir in self.root_dir.iterdir():
+        # Debug: Print root directory
+        logging.info(f"Loading dataset from: {self.root_dir}")
+        
+        # If class_list is provided, use it instead of discovering classes
+        if self.predefined_classes:
+            self.classes = self.predefined_classes
+            self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
+            logging.info(f"Using predefined class list with {len(self.classes)} classes")
+        else:
+            # Get all subdirectories that will be treated as classes
+            all_dirs = [d for d in self.root_dir.iterdir() if d.is_dir()]
+            logging.info(f"Found {len(all_dirs)} potential class directories")
+            self.classes = []
+            self.class_sample_counts = {}
+        
+        # Load all image paths and count samples per class
+        for class_dir in all_dirs:
             if class_dir.is_dir():
-                for img_path in class_dir.glob('*.[jp][pn][g]'):
+                class_name = class_dir.name
+                # Look for more image formats
+                class_images = []
+                for ext in ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG']:
+                    class_images.extend(list(class_dir.glob(f"*{ext}")))
+                
+                total_images = len(class_images)
+                logging.info(f"Class '{class_name}': Found {total_images} image files")
+                
+                valid_images = []
+                for img_path in class_images:
                     try:
                         # Check if the image is valid by loading it
                         with Image.open(img_path) as img:
                             img.verify()  # Verify that the image is not corrupted
-                            self.samples.append((str(img_path), self.class_to_idx[class_dir.name]))
+                            valid_images.append(img_path)
                     except Exception as e:
                         logging.error(f"Error loading image {img_path}: {str(e)}")
-
-    def __len__(self):
-        return len(self.samples)
-    
-    def __getitem__(self, idx):
-        img_path, label = self.samples[idx]
-        try:
-            with Image.open(img_path) as img:
-                img = img.convert('RGB')  # Convert to RGB
-                if self.transform:
-                    img = self.transform(img)
-                return img, label
-        except Exception as e:
-            logging.error(f"Error loading image {img_path}: {str(e)}")
-            return self.__getitem__((idx + 1) % len(self))
+                        # Skip the image if there's an error loading it
+                
+                if not valid_images:
+                    logging.warning(f"No valid images found in class directory: {class_name}")
+                    if force_all_classes:
+                        logging.info(f"Force including class '{class_name}' even with no valid images")
+                        self.classes.append(class_name)
+                        self.class_sample_counts[class_name] = 0
+                    continue
+                
+                self.classes.append(class_name)
+                self.class_sample_counts[class_name] = len(valid_images)
+                logging.info(f"Class '{class_name}': {len(valid_images)} valid images out of {total_images}")
+                
+                for img_path in valid_images:
+                    self.samples.append((str(img_path), len(self.classes) - 1))
+        
+        # Sort classes for consistency
+        self.classes = sorted(self.classes)
+        self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
+        
+        # Update indices to match sorted classes
+        updated_samples = []
+        for path, _ in self.samples:
+            class_name = Path(path).parent.name
+            if class_name in self.class_to_idx:
+                updated_samples.append((path, self.class_to_idx[class_name]))
+            else:
+                logging.warning(f"Image {path} belongs to unknown class {class_name}, skipping")
+        self.samples = updated_samples
+        
+        # Debug: Print class distribution
+        logging.info(f"Found {len(self.classes)} valid classes with images")
+        for cls in self.classes:
+            count = self.class_sample_counts.get(cls, 0)
+            logging.info(f"Class '{cls}': {count} valid images")
 
 class CannyEdgeDetection:
     def __call__(self, img):
@@ -62,9 +238,19 @@ class CannyEdgeDetection:
         edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)  # Convert edges to 3-channel RGB
         return Image.fromarray(edges)
     
-def get_transforms():
+def get_transforms(use_canny=True):
+    """
+    Get transforms for training and validation.
+    Args:
+        use_canny: If True, apply Canny edge detection.
+    """
+    if use_canny:
+        edge_transform = CannyEdgeDetection()
+    else:
+        edge_transform = transforms.Lambda(lambda x: x)  # Identity transform
+
     train_transform = transforms.Compose([
-        CannyEdgeDetection(),  # Apply Canny edge detection
+        edge_transform,  # Apply Canny edge detection if enabled
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(10),
         transforms.RandomResizedCrop(224),
@@ -73,7 +259,7 @@ def get_transforms():
     ])
 
     val_transform = transforms.Compose([
-        CannyEdgeDetection(),  # Apply Canny edge detection
+        edge_transform,  # Apply Canny edge detection if enabled
         transforms.Resize(224),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
@@ -82,45 +268,25 @@ def get_transforms():
 
     return train_transform, val_transform
 
-def mixup_data(x, y, alpha=1.0):
-    """Applies Mixup to the input data"""
-    if alpha > 0:
-        lam = np.random.beta(alpha, alpha)
-        batch_size = x.size()[0]
-        index = torch.randperm(batch_size).cuda()
-        mixed_x = lam * x + (1 - lam) * x[index, :]
-        mixed_y = lam * y + (1 - lam) * y[index]
-        return mixed_x, mixed_y, lam
-    else:
-        return x, y, 1
+def get_all_classes(train_dir, test_dir):
+    """
+    Get a unified list of all classes from both train and test directories.
+    """
+    train_classes, _ = analyze_dataset_structure(train_dir)
+    test_classes, _ = analyze_dataset_structure(test_dir)
+    
+    # Combine classes from both directories
+    all_classes = sorted(set(train_classes).union(set(test_classes)))
+    logging.info(f"Combined list of classes: {len(all_classes)} classes")
+    return all_classes
 
-def cutmix_data(x, y, alpha=1.0):
-    """Applies CutMix to the input data"""
-    if alpha > 0:
-        lam = np.random.beta(alpha, alpha)
-        batch_size = x.size()[0]
-        index = torch.randperm(batch_size).cuda()
-        bbx1, bby1, bbx2, bby2 = rand_bbox(x.size(), lam)
-        x[:, :, bbx1:bbx2, bby1:bby2] = x[index, :, bbx1:bbx2, bby1:bby2]
-        y_a, y_b = y, y[index]
-        return x, y_a, y_b, lam
-    else:
-        return x, y, y, 1
+def main():
+    parser = argparse.ArgumentParser(description='Analyze dataset structure for deep learning')
+    parser.add_argument('--train', type=str, default='data/train', help='Path to training dataset')
+    parser.add_argument('--test', type=str, default='data/test', help='Path to test dataset')
+    args = parser.parse_args()
+    
+    compare_datasets(args.train, args.test)
 
-def rand_bbox(size, lam):
-    W = size[2]
-    H = size[3]
-    cut_rat = np.sqrt(1. - lam)
-    cut_w = int(W * cut_rat)  # Fixed: using built-in int() instead of np.int()
-    cut_h = int(H * cut_rat)  # Fixed: using built-in int() instead of np.int()
-
-    # Uniformly sample the top left corner of the bounding box
-    cx = np.random.randint(W)
-    cy = np.random.randint(H)
-
-    bbx1 = np.clip(cx - cut_w // 2, 0, W)
-    bby1 = np.clip(cy - cut_h // 2, 0, H)
-    bbx2 = np.clip(cx + cut_w // 2, 0, W)
-    bby2 = np.clip(cy + cut_h // 2, 0, H)
-
-    return bbx1, bby1, bbx2, bby2
+if __name__ == "__main__":
+    main()
