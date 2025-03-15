@@ -147,10 +147,16 @@ class PlantDataset(torch.utils.data.Dataset):
         self.transform = transform
         self.samples = []
         self.force_all_classes = force_all_classes
-        self.predefined_classes = class_list  # Add this line
+        self.predefined_classes = class_list
+        self.class_sample_counts = {}
+        self.valid_images_by_class = {}  # Store valid images by class for fallback
         
         # Debug: Print root directory
         logging.info(f"Loading dataset from: {self.root_dir}")
+        
+        # Get all subdirectories - fixed to ensure all_dirs is always defined
+        all_dirs = [d for d in self.root_dir.iterdir() if d.is_dir()]
+        logging.info(f"Found {len(all_dirs)} potential class directories")
         
         # If class_list is provided, use it instead of discovering classes
         if self.predefined_classes:
@@ -158,16 +164,19 @@ class PlantDataset(torch.utils.data.Dataset):
             self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
             logging.info(f"Using predefined class list with {len(self.classes)} classes")
         else:
-            # Get all subdirectories that will be treated as classes
-            all_dirs = [d for d in self.root_dir.iterdir() if d.is_dir()]
-            logging.info(f"Found {len(all_dirs)} potential class directories")
+            # Discover classes from directories
             self.classes = []
-            self.class_sample_counts = {}
+            self.class_to_idx = {}
         
         # Load all image paths and count samples per class
         for class_dir in all_dirs:
             if class_dir.is_dir():
                 class_name = class_dir.name
+                # Skip classes not in predefined list if we're using one
+                if self.predefined_classes and class_name not in self.predefined_classes:
+                    logging.info(f"Skipping class '{class_name}' as it's not in the predefined list")
+                    continue
+                
                 # Look for more image formats
                 class_images = []
                 for ext in ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG']:
@@ -189,56 +198,119 @@ class PlantDataset(torch.utils.data.Dataset):
                 
                 if not valid_images:
                     logging.warning(f"No valid images found in class directory: {class_name}")
-                    if force_all_classes:
+                    if force_all_classes and (not self.predefined_classes or class_name in self.predefined_classes):
                         logging.info(f"Force including class '{class_name}' even with no valid images")
-                        self.classes.append(class_name)
+                        if not self.predefined_classes:  # Only add to classes if not predefined
+                            self.classes.append(class_name)
                         self.class_sample_counts[class_name] = 0
                     continue
                 
-                self.classes.append(class_name)
+                if not self.predefined_classes:  # Only add to classes if not predefined
+                    self.classes.append(class_name)
                 self.class_sample_counts[class_name] = len(valid_images)
+                self.valid_images_by_class[class_name] = [str(path) for path in valid_images]
                 logging.info(f"Class '{class_name}': {len(valid_images)} valid images out of {total_images}")
                 
-                for img_path in valid_images:
-                    self.samples.append((str(img_path), len(self.classes) - 1))
+                # Only add samples if we have a valid class_to_idx mapping
+                if not self.predefined_classes:
+                    class_idx = len(self.classes) - 1
+                    self.class_to_idx[class_name] = class_idx
+                else:
+                    class_idx = self.class_to_idx.get(class_name)
+                    
+                if class_idx is not None:  # Make sure we have a valid index
+                    for img_path in valid_images:
+                        self.samples.append((str(img_path), class_idx))
         
-        # Sort classes for consistency
-        self.classes = sorted(self.classes)
-        self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
-        
-        # Update indices to match sorted classes
-        updated_samples = []
-        for path, _ in self.samples:
-            class_name = Path(path).parent.name
-            if class_name in self.class_to_idx:
-                updated_samples.append((path, self.class_to_idx[class_name]))
-            else:
-                logging.warning(f"Image {path} belongs to unknown class {class_name}, skipping")
-        self.samples = updated_samples
+        # Sort classes for consistency if not predefined
+        if not self.predefined_classes:
+            self.classes = sorted(self.classes)
+            self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
+            
+            # Update indices to match sorted classes
+            updated_samples = []
+            for path, _ in self.samples:
+                class_name = Path(path).parent.name
+                if class_name in self.class_to_idx:
+                    updated_samples.append((path, self.class_to_idx[class_name]))
+                else:
+                    logging.warning(f"Image {path} belongs to unknown class {class_name}, skipping")
+            self.samples = updated_samples
         
         # Debug: Print class distribution
         logging.info(f"Found {len(self.classes)} valid classes with images")
         for cls in self.classes:
             count = self.class_sample_counts.get(cls, 0)
             logging.info(f"Class '{cls}': {count} valid images")
+            
+    def __len__(self):
+        return len(self.samples)
+    
+    def __getitem__(self, idx):
+        img_path, class_idx = self.samples[idx]
+        
+        try:
+            img = Image.open(img_path).convert('RGB')
+            
+            if self.transform:
+                img = self.transform(img)
+                
+            return img, class_idx
+        except Exception as e:
+            logging.error(f"Error loading image at runtime: {img_path}, {str(e)}")
+            
+            # Get class name from path
+            class_name = Path(img_path).parent.name
+            
+            # Return a random valid image from the same class if available
+            if class_name in self.valid_images_by_class and self.valid_images_by_class[class_name]:
+                fallback_paths = [p for p in self.valid_images_by_class[class_name] if p != img_path]
+                if fallback_paths:
+                    try:
+                        fallback_path = random.choice(fallback_paths)
+                        logging.info(f"Using fallback image from same class: {fallback_path}")
+                        img = Image.open(fallback_path).convert('RGB')
+                        if self.transform:
+                            img = self.transform(img)
+                        return img, class_idx
+                    except Exception as fallback_e:
+                        logging.error(f"Error with fallback image: {fallback_e}")
+            
+            # If all fails, return a placeholder
+            logging.warning(f"Using zero tensor placeholder for class {class_name}")
+            placeholder = torch.zeros((3, 224, 224))
+            return placeholder, class_idx
 
 class CannyEdgeDetection:
     def __call__(self, img):
-        img = np.array(img)  # Convert PIL image to numpy array
+        try:
+            img = np.array(img)  # Convert PIL image to numpy array
 
-        if img.ndim != 3:  # Check if the image has 3 channels
-            logging.error(f"Image has invalid number of channels: {img.shape}")
-            return img  # Return the original image if it has an invalid number of channels
+            if img.ndim != 3:  # Check if the image has 3 channels
+                logging.error(f"Image has invalid number of channels: {img.shape}")
+                # Convert to 3 channels if needed
+                if img.ndim == 2:  # Grayscale
+                    img = np.stack((img,) * 3, axis=-1)
+                else:
+                    return Image.fromarray(np.zeros((224, 224, 3), dtype=np.uint8))  # Return blank image
 
-        # Convert the image to 8-bit depth before applying Canny edge detection
-        if img.dtype != np.uint8:
-            img = np.uint8(img)  # Convert to 8-bit if it's not
+            # Convert the image to 8-bit depth before applying Canny edge detection
+            if img.dtype != np.uint8:
+                # Scale to 0-255 range
+                img = np.clip(img, 0, 255).astype(np.uint8)
 
-        edges = cv2.Canny(img, threshold1=100, threshold2=200)  # Apply Canny edge detection
-        edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)  # Convert edges to 3-channel RGB
-        return Image.fromarray(edges)
+            # Apply Canny edge detection to each channel separately
+            edges = np.zeros_like(img)
+            for i in range(3):
+                edges[:, :, i] = cv2.Canny(img[:, :, i], threshold1=100, threshold2=200)
+            
+            return Image.fromarray(edges)
+        except Exception as e:
+            logging.error(f"Error in Canny edge detection: {str(e)}")
+            # Return blank image in case of error
+            return Image.fromarray(np.zeros((224, 224, 3), dtype=np.uint8))
     
-def get_transforms(use_canny=True):
+def get_transforms(use_canny=False):  # Changed default to False to avoid potential issues
     """
     Get transforms for training and validation.
     Args:
@@ -260,7 +332,7 @@ def get_transforms(use_canny=True):
 
     val_transform = transforms.Compose([
         edge_transform,  # Apply Canny edge detection if enabled
-        transforms.Resize(224),
+        transforms.Resize(256),  # Resize to slightly larger than crop size
         transforms.CenterCrop(224),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),

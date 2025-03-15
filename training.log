@@ -1,0 +1,720 @@
+2025-03-15 14:38:34,197 - INFO - Training data path: data\train
+2025-03-15 14:38:34,198 - INFO - Testing data path: data\test
+2025-03-15 14:38:34,198 - INFO - Analyzing dataset directory: data\train
+2025-03-15 14:38:34,203 - INFO - Found 38 potential class directories
+2025-03-15 14:38:34,203 - INFO - 
+Analyzing class: Apple___Apple_scab
+2025-03-15 14:39:05,061 - INFO -   Total images found: 4162
+2025-03-15 14:39:05,062 - INFO -   Valid images: 4162
+2025-03-15 14:39:05,062 - INFO -   Invalid images: 0
+2025-03-15 14:39:05,062 - INFO - 
+Analyzing class: Apple___Black_rot
+2025-03-15 14:39:31,240 - INFO -   Total images found: 3974
+2025-03-15 14:39:31,241 - INFO -   Valid images: 3974
+2025-03-15 14:39:31,241 - INFO -   Invalid images: 0
+2025-03-15 14:39:31,242 - INFO - 
+Analyzing class: Apple___Cedar_apple_rust
+2025-03-15 14:39:55,331 - INFO -   Total images found: 3654
+2025-03-15 14:39:55,331 - INFO -   Valid images: 3654
+2025-03-15 14:39:55,331 - INFO -   Invalid images: 0
+2025-03-15 14:39:55,331 - INFO - 
+Analyzing class: Apple___healthy
+2025-03-15 14:40:21,808 - INFO -   Total images found: 4016
+2025-03-15 14:40:21,808 - INFO -   Valid images: 4016
+2025-03-15 14:40:21,808 - INFO -   Invalid images: 0
+2025-03-15 14:40:21,808 - INFO - 
+Analyzing class: Blueberry___healthy
+2025-03-15 14:40:44,266 - INFO -   Total images found: 3632
+2025-03-15 14:40:44,266 - INFO -   Valid images: 3632
+2025-03-15 14:40:44,266 - INFO -   Invalid images: 0
+2025-03-15 14:40:44,266 - INFO - 
+Analyzing class: Cherry_(including_sour)___healthy
+2025-03-15 14:41:06,901 - INFO -   Total images found: 3652
+2025-03-15 14:41:06,901 - INFO -   Valid images: 3652
+2025-03-15 14:41:06,901 - INFO -   Invalid images: 0
+2025-03-15 14:41:06,903 - INFO - 
+Analyzing class: Cherry_(including_sour)___Powdery_mildew
+2025-03-15 14:41:28,060 - INFO -   Total images found: 3366
+2025-03-15 14:41:28,060 - INFO -   Valid images: 3366
+2025-03-15 14:41:28,060 - INFO -   Invalid images: 0
+2025-03-15 14:41:28,060 - INFO - 
+Analyzing class: Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot
+2025-03-15 14:41:48,451 - INFO -   Total images found: 3284
+2025-03-15 14:41:48,451 - INFO -   Valid images: 3284
+2025-03-15 14:41:48,451 - INFO -   Invalid images: 0
+2025-03-15 14:41:48,451 - INFO - 
+Analyzing class: Corn_(maize)___Common_rust_
+2025-03-15 14:42:11,874 - INFO -   Total images found: 3814
+2025-03-15 14:42:11,874 - INFO -   Valid images: 3814
+2025-03-15 14:42:11,874 - INFO -   Invalid images: 0
+2025-03-15 14:42:11,875 - INFO - 
+Analyzing class: Corn_(maize)___healthy
+2025-03-15 14:42:36,363 - INFO -   Total images found: 3718
+2025-03-15 14:42:36,363 - INFO -   Valid images: 3718
+2025-03-15 14:42:36,363 - INFO -   Invalid images: 0
+2025-03-15 14:42:36,363 - INFO - 
+Analyzing class: Corn_(maize)___Northern_Leaf_Blight
+2025-03-15 14:43:00,161 - INFO -   Total images found: 3816
+2025-03-15 14:43:00,161 - INFO -   Valid images: 3816
+2025-03-15 14:43:00,161 - INFO -   Invalid images: 0
+2025-03-15 14:43:00,162 - INFO - 
+Analyzing class: Grape___Black_rot
+2025-03-15 14:43:23,315 - INFO -   Total images found: 3776
+2025-03-15 14:43:23,315 - INFO -   Valid images: 3776
+2025-03-15 14:43:23,315 - INFO -   Invalid images: 0
+2025-03-15 14:43:23,315 - INFO - 
+Analyzing class: Grape___Esca_(Black_Measles)
+2025-03-15 14:43:47,076 - INFO -   Total images found: 3840
+2025-03-15 14:43:47,076 - INFO -   Valid images: 3840
+2025-03-15 14:43:47,076 - INFO -   Invalid images: 0
+2025-03-15 14:43:47,076 - INFO - 
+Analyzing class: Grape___healthy
+2025-03-15 14:44:08,192 - INFO -   Total images found: 3384
+2025-03-15 14:44:08,193 - INFO -   Valid images: 3384
+2025-03-15 14:44:08,193 - INFO -   Invalid images: 0
+2025-03-15 14:44:08,193 - INFO - 
+Analyzing class: Grape___Leaf_blight_(Isariopsis_Leaf_Spot)
+2025-03-15 14:44:29,637 - INFO -   Total images found: 3444
+2025-03-15 14:44:29,637 - INFO -   Valid images: 3444
+2025-03-15 14:44:29,638 - INFO -   Invalid images: 0
+2025-03-15 14:44:29,638 - INFO - 
+Analyzing class: Orange___Haunglongbing_(Citrus_greening)
+2025-03-15 14:44:56,743 - INFO -   Total images found: 4020
+2025-03-15 14:44:56,743 - INFO -   Valid images: 4020
+2025-03-15 14:44:56,743 - INFO -   Invalid images: 0
+2025-03-15 14:44:56,743 - INFO - 
+Analyzing class: Peach___Bacterial_spot
+2025-03-15 14:45:18,818 - INFO -   Total images found: 3676
+2025-03-15 14:45:18,818 - INFO -   Valid images: 3676
+2025-03-15 14:45:18,818 - INFO -   Invalid images: 0
+2025-03-15 14:45:18,818 - INFO - 
+Analyzing class: Peach___healthy
+2025-03-15 14:45:39,421 - INFO -   Total images found: 3456
+2025-03-15 14:45:39,421 - INFO -   Valid images: 3456
+2025-03-15 14:45:39,421 - INFO -   Invalid images: 0
+2025-03-15 14:45:39,422 - INFO - 
+Analyzing class: Pepper,_bell___Bacterial_spot
+2025-03-15 14:46:10,967 - INFO -   Total images found: 5420
+2025-03-15 14:46:10,967 - INFO -   Valid images: 5420
+2025-03-15 14:46:10,967 - INFO -   Invalid images: 0
+2025-03-15 14:46:10,968 - INFO - 
+Analyzing class: Pepper,_bell___healthy
+2025-03-15 14:46:50,234 - INFO -   Total images found: 6340
+2025-03-15 14:46:50,234 - INFO -   Valid images: 6340
+2025-03-15 14:46:50,234 - INFO -   Invalid images: 0
+2025-03-15 14:46:50,234 - INFO - 
+Analyzing class: Potato___Early_blight
+2025-03-15 14:47:24,569 - INFO -   Total images found: 5478
+2025-03-15 14:47:24,569 - INFO -   Valid images: 5478
+2025-03-15 14:47:24,569 - INFO -   Invalid images: 0
+2025-03-15 14:47:24,569 - INFO - 
+Analyzing class: Potato___healthy
+2025-03-15 14:47:48,833 - INFO -   Total images found: 3942
+2025-03-15 14:47:48,833 - INFO -   Valid images: 3942
+2025-03-15 14:47:48,833 - INFO -   Invalid images: 0
+2025-03-15 14:47:48,835 - INFO - 
+Analyzing class: Potato___Late_blight
+2025-03-15 14:48:21,211 - INFO -   Total images found: 5266
+2025-03-15 14:48:21,211 - INFO -   Valid images: 5266
+2025-03-15 14:48:21,227 - INFO -   Invalid images: 0
+2025-03-15 14:48:21,227 - INFO - 
+Analyzing class: Raspberry___healthy
+2025-03-15 14:48:43,103 - INFO -   Total images found: 3562
+2025-03-15 14:48:43,103 - INFO -   Valid images: 3562
+2025-03-15 14:48:43,103 - INFO -   Invalid images: 0
+2025-03-15 14:48:43,103 - INFO - 
+Analyzing class: Soybean___healthy
+2025-03-15 14:49:07,864 - INFO -   Total images found: 4044
+2025-03-15 14:49:07,864 - INFO -   Valid images: 4044
+2025-03-15 14:49:07,864 - INFO -   Invalid images: 0
+2025-03-15 14:49:07,864 - INFO - 
+Analyzing class: Squash___Powdery_mildew
+2025-03-15 14:49:29,332 - INFO -   Total images found: 3472
+2025-03-15 14:49:29,332 - INFO -   Valid images: 3472
+2025-03-15 14:49:29,332 - INFO -   Invalid images: 0
+2025-03-15 14:49:29,333 - INFO - 
+Analyzing class: Strawberry___healthy
+2025-03-15 14:49:51,676 - INFO -   Total images found: 3648
+2025-03-15 14:49:51,676 - INFO -   Valid images: 3648
+2025-03-15 14:49:51,676 - INFO -   Invalid images: 0
+2025-03-15 14:49:51,676 - INFO - 
+Analyzing class: Strawberry___Leaf_scorch
+2025-03-15 14:50:13,537 - INFO -   Total images found: 3548
+2025-03-15 14:50:13,537 - INFO -   Valid images: 3548
+2025-03-15 14:50:13,537 - INFO -   Invalid images: 0
+2025-03-15 14:50:13,537 - INFO - 
+Analyzing class: Tomato___Bacterial_spot
+2025-03-15 14:50:39,023 - INFO -   Total images found: 4088
+2025-03-15 14:50:39,024 - INFO -   Valid images: 4088
+2025-03-15 14:50:39,024 - INFO -   Invalid images: 0
+2025-03-15 14:50:39,024 - INFO - 
+Analyzing class: Tomato___Early_blight
+2025-03-15 14:51:04,666 - INFO -   Total images found: 4152
+2025-03-15 14:51:04,667 - INFO -   Valid images: 4152
+2025-03-15 14:51:04,667 - INFO -   Invalid images: 0
+2025-03-15 14:51:04,667 - INFO - 
+Analyzing class: Tomato___healthy
+2025-03-15 14:51:36,148 - INFO -   Total images found: 4350
+2025-03-15 14:51:36,148 - INFO -   Valid images: 4350
+2025-03-15 14:51:36,148 - INFO -   Invalid images: 0
+2025-03-15 14:51:36,148 - INFO - 
+Analyzing class: Tomato___Late_blight
+2025-03-15 14:52:03,596 - INFO -   Total images found: 4284
+2025-03-15 14:52:03,596 - INFO -   Valid images: 4284
+2025-03-15 14:52:03,596 - INFO -   Invalid images: 0
+2025-03-15 14:52:03,597 - INFO - 
+Analyzing class: Tomato___Leaf_Mold
+2025-03-15 14:52:28,739 - INFO -   Total images found: 4064
+2025-03-15 14:52:28,739 - INFO -   Valid images: 4064
+2025-03-15 14:52:28,739 - INFO -   Invalid images: 0
+2025-03-15 14:52:28,739 - INFO - 
+Analyzing class: Tomato___Septoria_leaf_spot
+2025-03-15 14:52:53,789 - INFO -   Total images found: 4048
+2025-03-15 14:52:53,789 - INFO -   Valid images: 4048
+2025-03-15 14:52:53,789 - INFO -   Invalid images: 0
+2025-03-15 14:52:53,789 - INFO - 
+Analyzing class: Tomato___Spider_mites Two-spotted_spider_mite
+2025-03-15 14:53:18,810 - INFO -   Total images found: 4012
+2025-03-15 14:53:18,810 - INFO -   Valid images: 4012
+2025-03-15 14:53:18,810 - INFO -   Invalid images: 0
+2025-03-15 14:53:18,811 - INFO - 
+Analyzing class: Tomato___Target_Spot
+2025-03-15 14:53:41,385 - INFO -   Total images found: 3654
+2025-03-15 14:53:41,385 - INFO -   Valid images: 3654
+2025-03-15 14:53:41,385 - INFO -   Invalid images: 0
+2025-03-15 14:53:41,386 - INFO - 
+Analyzing class: Tomato___Tomato_mosaic_virus
+2025-03-15 14:54:03,538 - INFO -   Total images found: 3580
+2025-03-15 14:54:03,538 - INFO -   Valid images: 3580
+2025-03-15 14:54:03,538 - INFO -   Invalid images: 0
+2025-03-15 14:54:03,538 - INFO - 
+Analyzing class: Tomato___Tomato_Yellow_Leaf_Curl_Virus
+2025-03-15 14:54:57,673 - INFO -   Total images found: 8470
+2025-03-15 14:54:57,673 - INFO -   Valid images: 8470
+2025-03-15 14:54:57,673 - INFO -   Invalid images: 0
+2025-03-15 14:54:57,673 - INFO - 
+====== Dataset Summary ======
+2025-03-15 14:54:57,673 - INFO - Total class directories found: 38
+2025-03-15 14:54:57,675 - INFO - Valid classes with images: 38
+2025-03-15 14:54:57,675 - INFO - 
+Class distribution:
+2025-03-15 14:54:57,675 - INFO -   Tomato___Tomato_Yellow_Leaf_Curl_Virus: 8470 images (5.4%)
+2025-03-15 14:54:57,675 - INFO -   Pepper,_bell___healthy: 6340 images (4.1%)
+2025-03-15 14:54:57,675 - INFO -   Potato___Early_blight: 5478 images (3.5%)
+2025-03-15 14:54:57,676 - INFO -   Pepper,_bell___Bacterial_spot: 5420 images (3.5%)
+2025-03-15 14:54:57,676 - INFO -   Potato___Late_blight: 5266 images (3.4%)
+2025-03-15 14:54:57,676 - INFO -   Tomato___healthy: 4350 images (2.8%)
+2025-03-15 14:54:57,676 - INFO -   Tomato___Late_blight: 4284 images (2.7%)
+2025-03-15 14:54:57,676 - INFO -   Apple___Apple_scab: 4162 images (2.7%)
+2025-03-15 14:54:57,677 - INFO -   Tomato___Early_blight: 4152 images (2.7%)
+2025-03-15 14:54:57,677 - INFO -   Tomato___Bacterial_spot: 4088 images (2.6%)
+2025-03-15 14:54:57,677 - INFO -   Tomato___Leaf_Mold: 4064 images (2.6%)
+2025-03-15 14:54:57,677 - INFO -   Tomato___Septoria_leaf_spot: 4048 images (2.6%)
+2025-03-15 14:54:57,677 - INFO -   Soybean___healthy: 4044 images (2.6%)
+2025-03-15 14:54:57,677 - INFO -   Orange___Haunglongbing_(Citrus_greening): 4020 images (2.6%)
+2025-03-15 14:54:57,678 - INFO -   Apple___healthy: 4016 images (2.6%)
+2025-03-15 14:54:57,678 - INFO -   Tomato___Spider_mites Two-spotted_spider_mite: 4012 images (2.6%)
+2025-03-15 14:54:57,678 - INFO -   Apple___Black_rot: 3974 images (2.5%)
+2025-03-15 14:54:57,678 - INFO -   Potato___healthy: 3942 images (2.5%)
+2025-03-15 14:54:57,678 - INFO -   Grape___Esca_(Black_Measles): 3840 images (2.5%)
+2025-03-15 14:54:57,679 - INFO -   Corn_(maize)___Northern_Leaf_Blight: 3816 images (2.4%)
+2025-03-15 14:54:57,679 - INFO -   Corn_(maize)___Common_rust_: 3814 images (2.4%)
+2025-03-15 14:54:57,679 - INFO -   Grape___Black_rot: 3776 images (2.4%)
+2025-03-15 14:54:57,679 - INFO -   Corn_(maize)___healthy: 3718 images (2.4%)
+2025-03-15 14:54:57,680 - INFO -   Peach___Bacterial_spot: 3676 images (2.4%)
+2025-03-15 14:54:57,680 - INFO -   Apple___Cedar_apple_rust: 3654 images (2.3%)
+2025-03-15 14:54:57,680 - INFO -   Tomato___Target_Spot: 3654 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Cherry_(including_sour)___healthy: 3652 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Strawberry___healthy: 3648 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Blueberry___healthy: 3632 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Tomato___Tomato_mosaic_virus: 3580 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Raspberry___healthy: 3562 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Strawberry___Leaf_scorch: 3548 images (2.3%)
+2025-03-15 14:54:57,681 - INFO -   Squash___Powdery_mildew: 3472 images (2.2%)
+2025-03-15 14:54:57,683 - INFO -   Peach___healthy: 3456 images (2.2%)
+2025-03-15 14:54:57,683 - INFO -   Grape___Leaf_blight_(Isariopsis_Leaf_Spot): 3444 images (2.2%)
+2025-03-15 14:54:57,683 - INFO -   Grape___healthy: 3384 images (2.2%)
+2025-03-15 14:54:57,683 - INFO -   Cherry_(including_sour)___Powdery_mildew: 3366 images (2.2%)
+2025-03-15 14:54:57,683 - INFO -   Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot: 3284 images (2.1%)
+2025-03-15 14:54:57,687 - INFO - Analyzing dataset directory: data\test
+2025-03-15 14:54:57,693 - INFO - Found 38 potential class directories
+2025-03-15 14:54:57,693 - INFO - 
+Analyzing class: Apple___Apple_scab
+2025-03-15 14:55:04,019 - INFO -   Total images found: 1008
+2025-03-15 14:55:04,020 - INFO -   Valid images: 1008
+2025-03-15 14:55:04,020 - INFO -   Invalid images: 0
+2025-03-15 14:55:04,020 - INFO - 
+Analyzing class: Apple___Black_rot
+2025-03-15 14:55:10,232 - INFO -   Total images found: 994
+2025-03-15 14:55:10,232 - INFO -   Valid images: 994
+2025-03-15 14:55:10,232 - INFO -   Invalid images: 0
+2025-03-15 14:55:10,232 - INFO - 
+Analyzing class: Apple___Cedar_apple_rust
+2025-03-15 14:55:15,873 - INFO -   Total images found: 880
+2025-03-15 14:55:15,873 - INFO -   Valid images: 880
+2025-03-15 14:55:15,873 - INFO -   Invalid images: 0
+2025-03-15 14:55:15,874 - INFO - 
+Analyzing class: Apple___healthy
+2025-03-15 14:55:22,246 - INFO -   Total images found: 1004
+2025-03-15 14:55:22,246 - INFO -   Valid images: 1004
+2025-03-15 14:55:22,246 - INFO -   Invalid images: 0
+2025-03-15 14:55:22,246 - INFO - 
+Analyzing class: Blueberry___healthy
+2025-03-15 14:55:27,899 - INFO -   Total images found: 908
+2025-03-15 14:55:27,899 - INFO -   Valid images: 908
+2025-03-15 14:55:27,899 - INFO -   Invalid images: 0
+2025-03-15 14:55:27,899 - INFO - 
+Analyzing class: Cherry_(including_sour)___healthy
+2025-03-15 14:55:33,540 - INFO -   Total images found: 912
+2025-03-15 14:55:33,540 - INFO -   Valid images: 912
+2025-03-15 14:55:33,540 - INFO -   Invalid images: 0
+2025-03-15 14:55:33,540 - INFO - 
+Analyzing class: Cherry_(including_sour)___Powdery_mildew
+2025-03-15 14:55:38,872 - INFO -   Total images found: 842
+2025-03-15 14:55:38,873 - INFO -   Valid images: 842
+2025-03-15 14:55:38,873 - INFO -   Invalid images: 0
+2025-03-15 14:55:38,873 - INFO - 
+Analyzing class: Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot
+2025-03-15 14:55:44,036 - INFO -   Total images found: 820
+2025-03-15 14:55:44,038 - INFO -   Valid images: 820
+2025-03-15 14:55:44,038 - INFO -   Invalid images: 0
+2025-03-15 14:55:44,038 - INFO - 
+Analyzing class: Corn_(maize)___Common_rust_
+2025-03-15 14:55:49,893 - INFO -   Total images found: 954
+2025-03-15 14:55:49,893 - INFO -   Valid images: 954
+2025-03-15 14:55:49,893 - INFO -   Invalid images: 0
+2025-03-15 14:55:49,894 - INFO - 
+Analyzing class: Corn_(maize)___healthy
+2025-03-15 14:55:55,984 - INFO -   Total images found: 930
+2025-03-15 14:55:55,984 - INFO -   Valid images: 930
+2025-03-15 14:55:55,984 - INFO -   Invalid images: 0
+2025-03-15 14:55:55,985 - INFO - 
+Analyzing class: Corn_(maize)___Northern_Leaf_Blight
+2025-03-15 14:56:02,036 - INFO -   Total images found: 954
+2025-03-15 14:56:02,038 - INFO -   Valid images: 954
+2025-03-15 14:56:02,038 - INFO -   Invalid images: 0
+2025-03-15 14:56:02,038 - INFO - 
+Analyzing class: Grape___Black_rot
+2025-03-15 14:56:07,869 - INFO -   Total images found: 944
+2025-03-15 14:56:07,869 - INFO -   Valid images: 944
+2025-03-15 14:56:07,869 - INFO -   Invalid images: 0
+2025-03-15 14:56:07,870 - INFO - 
+Analyzing class: Grape___Esca_(Black_Measles)
+2025-03-15 14:56:13,789 - INFO -   Total images found: 960
+2025-03-15 14:56:13,789 - INFO -   Valid images: 960
+2025-03-15 14:56:13,789 - INFO -   Invalid images: 0
+2025-03-15 14:56:13,789 - INFO - 
+Analyzing class: Grape___healthy
+2025-03-15 14:56:19,038 - INFO -   Total images found: 846
+2025-03-15 14:56:19,048 - INFO -   Valid images: 846
+2025-03-15 14:56:19,048 - INFO -   Invalid images: 0
+2025-03-15 14:56:19,048 - INFO - 
+Analyzing class: Grape___Leaf_blight_(Isariopsis_Leaf_Spot)
+2025-03-15 14:56:24,382 - INFO -   Total images found: 860
+2025-03-15 14:56:24,382 - INFO -   Valid images: 860
+2025-03-15 14:56:24,382 - INFO -   Invalid images: 0
+2025-03-15 14:56:24,383 - INFO - 
+Analyzing class: Orange___Haunglongbing_(Citrus_greening)
+2025-03-15 14:56:30,761 - INFO -   Total images found: 1006
+2025-03-15 14:56:30,761 - INFO -   Valid images: 1006
+2025-03-15 14:56:30,761 - INFO -   Invalid images: 0
+2025-03-15 14:56:30,761 - INFO - 
+Analyzing class: Peach___Bacterial_spot
+2025-03-15 14:56:36,532 - INFO -   Total images found: 918
+2025-03-15 14:56:36,532 - INFO -   Valid images: 918
+2025-03-15 14:56:36,532 - INFO -   Invalid images: 0
+2025-03-15 14:56:36,532 - INFO - 
+Analyzing class: Peach___healthy
+2025-03-15 14:56:41,875 - INFO -   Total images found: 864
+2025-03-15 14:56:41,875 - INFO -   Valid images: 864
+2025-03-15 14:56:41,875 - INFO -   Invalid images: 0
+2025-03-15 14:56:41,875 - INFO - 
+Analyzing class: Pepper,_bell___Bacterial_spot
+2025-03-15 14:56:47,779 - INFO -   Total images found: 956
+2025-03-15 14:56:47,780 - INFO -   Valid images: 956
+2025-03-15 14:56:47,780 - INFO -   Invalid images: 0
+2025-03-15 14:56:47,780 - INFO - 
+Analyzing class: Pepper,_bell___healthy
+2025-03-15 14:56:53,915 - INFO -   Total images found: 994
+2025-03-15 14:56:53,916 - INFO -   Valid images: 994
+2025-03-15 14:56:53,916 - INFO -   Invalid images: 0
+2025-03-15 14:56:53,916 - INFO - 
+Analyzing class: Potato___Early_blight
+2025-03-15 14:56:59,799 - INFO -   Total images found: 970
+2025-03-15 14:56:59,799 - INFO -   Valid images: 970
+2025-03-15 14:56:59,799 - INFO -   Invalid images: 0
+2025-03-15 14:56:59,799 - INFO - 
+Analyzing class: Potato___healthy
+2025-03-15 14:57:05,332 - INFO -   Total images found: 912
+2025-03-15 14:57:05,333 - INFO -   Valid images: 912
+2025-03-15 14:57:05,333 - INFO -   Invalid images: 0
+2025-03-15 14:57:05,333 - INFO - 
+Analyzing class: Potato___Late_blight
+2025-03-15 14:57:11,267 - INFO -   Total images found: 970
+2025-03-15 14:57:11,267 - INFO -   Valid images: 970
+2025-03-15 14:57:11,268 - INFO -   Invalid images: 0
+2025-03-15 14:57:11,268 - INFO - 
+Analyzing class: Raspberry___healthy
+2025-03-15 14:57:16,818 - INFO -   Total images found: 890
+2025-03-15 14:57:16,818 - INFO -   Valid images: 890
+2025-03-15 14:57:16,818 - INFO -   Invalid images: 0
+2025-03-15 14:57:16,818 - INFO - 
+Analyzing class: Soybean___healthy
+2025-03-15 14:57:23,003 - INFO -   Total images found: 1010
+2025-03-15 14:57:23,003 - INFO -   Valid images: 1010
+2025-03-15 14:57:23,004 - INFO -   Invalid images: 0
+2025-03-15 14:57:23,004 - INFO - 
+Analyzing class: Squash___Powdery_mildew
+2025-03-15 14:57:28,378 - INFO -   Total images found: 868
+2025-03-15 14:57:28,379 - INFO -   Valid images: 868
+2025-03-15 14:57:28,379 - INFO -   Invalid images: 0
+2025-03-15 14:57:28,379 - INFO - 
+Analyzing class: Strawberry___healthy
+2025-03-15 14:57:33,980 - INFO -   Total images found: 912
+2025-03-15 14:57:33,980 - INFO -   Valid images: 912
+2025-03-15 14:57:33,980 - INFO -   Invalid images: 0
+2025-03-15 14:57:33,981 - INFO - 
+Analyzing class: Strawberry___Leaf_scorch
+2025-03-15 14:57:39,552 - INFO -   Total images found: 888
+2025-03-15 14:57:39,552 - INFO -   Valid images: 888
+2025-03-15 14:57:39,552 - INFO -   Invalid images: 0
+2025-03-15 14:57:39,552 - INFO - 
+Analyzing class: Tomato___Bacterial_spot
+2025-03-15 14:57:49,184 - INFO -   Total images found: 1536
+2025-03-15 14:57:49,184 - INFO -   Valid images: 1536
+2025-03-15 14:57:49,184 - INFO -   Invalid images: 0
+2025-03-15 14:57:49,184 - INFO - 
+Analyzing class: Tomato___Early_blight
+2025-03-15 14:57:57,182 - INFO -   Total images found: 1288
+2025-03-15 14:57:57,182 - INFO -   Valid images: 1288
+2025-03-15 14:57:57,182 - INFO -   Invalid images: 0
+2025-03-15 14:57:57,182 - INFO - 
+Analyzing class: Tomato___healthy
+2025-03-15 14:58:06,124 - INFO -   Total images found: 1476
+2025-03-15 14:58:06,124 - INFO -   Valid images: 1476
+2025-03-15 14:58:06,124 - INFO -   Invalid images: 0
+2025-03-15 14:58:06,124 - INFO - 
+Analyzing class: Tomato___Late_blight
+2025-03-15 14:58:15,267 - INFO -   Total images found: 1528
+2025-03-15 14:58:15,267 - INFO -   Valid images: 1528
+2025-03-15 14:58:15,267 - INFO -   Invalid images: 0
+2025-03-15 14:58:15,267 - INFO - 
+Analyzing class: Tomato___Leaf_Mold
+2025-03-15 14:58:23,046 - INFO -   Total images found: 1256
+2025-03-15 14:58:23,046 - INFO -   Valid images: 1256
+2025-03-15 14:58:23,047 - INFO -   Invalid images: 0
+2025-03-15 14:58:23,047 - INFO - 
+Analyzing class: Tomato___Septoria_leaf_spot
+2025-03-15 14:58:31,922 - INFO -   Total images found: 1442
+2025-03-15 14:58:31,923 - INFO -   Valid images: 1442
+2025-03-15 14:58:31,923 - INFO -   Invalid images: 0
+2025-03-15 14:58:31,923 - INFO - 
+Analyzing class: Tomato___Spider_mites Two-spotted_spider_mite
+2025-03-15 14:58:40,580 - INFO -   Total images found: 1398
+2025-03-15 14:58:40,580 - INFO -   Valid images: 1398
+2025-03-15 14:58:40,580 - INFO -   Invalid images: 0
+2025-03-15 14:58:40,580 - INFO - 
+Analyzing class: Tomato___Target_Spot
+2025-03-15 14:58:46,229 - INFO -   Total images found: 914
+2025-03-15 14:58:46,229 - INFO -   Valid images: 914
+2025-03-15 14:58:46,229 - INFO -   Invalid images: 0
+2025-03-15 14:58:46,229 - INFO - 
+Analyzing class: Tomato___Tomato_mosaic_virus
+2025-03-15 14:58:51,853 - INFO -   Total images found: 896
+2025-03-15 14:58:51,853 - INFO -   Valid images: 896
+2025-03-15 14:58:51,853 - INFO -   Invalid images: 0
+2025-03-15 14:58:51,853 - INFO - 
+Analyzing class: Tomato___Tomato_Yellow_Leaf_Curl_Virus
+2025-03-15 14:59:05,837 - INFO -   Total images found: 2222
+2025-03-15 14:59:05,837 - INFO -   Valid images: 2222
+2025-03-15 14:59:05,837 - INFO -   Invalid images: 0
+2025-03-15 14:59:05,837 - INFO - 
+====== Dataset Summary ======
+2025-03-15 14:59:05,837 - INFO - Total class directories found: 38
+2025-03-15 14:59:05,837 - INFO - Valid classes with images: 38
+2025-03-15 14:59:05,837 - INFO - 
+Class distribution:
+2025-03-15 14:59:05,837 - INFO -   Tomato___Tomato_Yellow_Leaf_Curl_Virus: 2222 images (5.6%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Bacterial_spot: 1536 images (3.8%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Late_blight: 1528 images (3.8%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___healthy: 1476 images (3.7%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Septoria_leaf_spot: 1442 images (3.6%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Spider_mites Two-spotted_spider_mite: 1398 images (3.5%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Early_blight: 1288 images (3.2%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Leaf_Mold: 1256 images (3.1%)
+2025-03-15 14:59:05,837 - INFO -   Soybean___healthy: 1010 images (2.5%)
+2025-03-15 14:59:05,837 - INFO -   Apple___Apple_scab: 1008 images (2.5%)
+2025-03-15 14:59:05,837 - INFO -   Orange___Haunglongbing_(Citrus_greening): 1006 images (2.5%)
+2025-03-15 14:59:05,837 - INFO -   Apple___healthy: 1004 images (2.5%)
+2025-03-15 14:59:05,837 - INFO -   Apple___Black_rot: 994 images (2.5%)
+2025-03-15 14:59:05,837 - INFO -   Pepper,_bell___healthy: 994 images (2.5%)
+2025-03-15 14:59:05,837 - INFO -   Potato___Early_blight: 970 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Potato___Late_blight: 970 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Grape___Esca_(Black_Measles): 960 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Pepper,_bell___Bacterial_spot: 956 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Corn_(maize)___Common_rust_: 954 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Corn_(maize)___Northern_Leaf_Blight: 954 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Grape___Black_rot: 944 images (2.4%)
+2025-03-15 14:59:05,837 - INFO -   Corn_(maize)___healthy: 930 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Peach___Bacterial_spot: 918 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Target_Spot: 914 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Cherry_(including_sour)___healthy: 912 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Potato___healthy: 912 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Strawberry___healthy: 912 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Blueberry___healthy: 908 images (2.3%)
+2025-03-15 14:59:05,837 - INFO -   Tomato___Tomato_mosaic_virus: 896 images (2.2%)
+2025-03-15 14:59:05,837 - INFO -   Raspberry___healthy: 890 images (2.2%)
+2025-03-15 14:59:05,837 - INFO -   Strawberry___Leaf_scorch: 888 images (2.2%)
+2025-03-15 14:59:05,837 - INFO -   Apple___Cedar_apple_rust: 880 images (2.2%)
+2025-03-15 14:59:05,837 - INFO -   Squash___Powdery_mildew: 868 images (2.2%)
+2025-03-15 14:59:05,847 - INFO -   Peach___healthy: 864 images (2.2%)
+2025-03-15 14:59:05,847 - INFO -   Grape___Leaf_blight_(Isariopsis_Leaf_Spot): 860 images (2.2%)
+2025-03-15 14:59:05,847 - INFO -   Grape___healthy: 846 images (2.1%)
+2025-03-15 14:59:05,847 - INFO -   Cherry_(including_sour)___Powdery_mildew: 842 images (2.1%)
+2025-03-15 14:59:05,847 - INFO -   Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot: 820 images (2.1%)
+2025-03-15 14:59:05,847 - INFO - Combined list of classes: 38 classes
+2025-03-15 14:59:05,847 - INFO - Total number of unique classes: 38
+2025-03-15 14:59:05,847 - INFO - Loading training dataset...
+2025-03-15 14:59:05,847 - INFO - Loading dataset from: data\train
+2025-03-15 14:59:05,853 - INFO - Found 38 potential class directories
+2025-03-15 14:59:05,855 - INFO - Using predefined class list with 38 classes
+2025-03-15 14:59:05,905 - INFO - Class 'Apple___Apple_scab': Found 4162 image files
+2025-03-15 14:59:08,060 - INFO - Class 'Apple___Apple_scab': 4162 valid images out of 4162
+2025-03-15 14:59:08,123 - INFO - Class 'Apple___Black_rot': Found 3974 image files
+2025-03-15 14:59:10,240 - INFO - Class 'Apple___Black_rot': 3974 valid images out of 3974
+2025-03-15 14:59:10,305 - INFO - Class 'Apple___Cedar_apple_rust': Found 3654 image files
+2025-03-15 14:59:12,149 - INFO - Class 'Apple___Cedar_apple_rust': 3654 valid images out of 3654
+2025-03-15 14:59:12,297 - INFO - Class 'Apple___healthy': Found 4016 image files
+2025-03-15 14:59:14,283 - INFO - Class 'Apple___healthy': 4016 valid images out of 4016
+2025-03-15 14:59:14,329 - INFO - Class 'Blueberry___healthy': Found 3632 image files
+2025-03-15 14:59:16,128 - INFO - Class 'Blueberry___healthy': 3632 valid images out of 3632
+2025-03-15 14:59:16,175 - INFO - Class 'Cherry_(including_sour)___healthy': Found 3652 image files
+2025-03-15 14:59:18,005 - INFO - Class 'Cherry_(including_sour)___healthy': 3652 valid images out of 3652
+2025-03-15 14:59:18,044 - INFO - Class 'Cherry_(including_sour)___Powdery_mildew': Found 3366 image files
+2025-03-15 14:59:19,744 - INFO - Class 'Cherry_(including_sour)___Powdery_mildew': 3366 valid images out of 3366
+2025-03-15 14:59:19,789 - INFO - Class 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': Found 3284 image files
+2025-03-15 14:59:21,437 - INFO - Class 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': 3284 valid images out of 3284
+2025-03-15 14:59:21,475 - INFO - Class 'Corn_(maize)___Common_rust_': Found 3814 image files
+2025-03-15 14:59:23,390 - INFO - Class 'Corn_(maize)___Common_rust_': 3814 valid images out of 3814
+2025-03-15 14:59:23,438 - INFO - Class 'Corn_(maize)___healthy': Found 3718 image files
+2025-03-15 14:59:25,315 - INFO - Class 'Corn_(maize)___healthy': 3718 valid images out of 3718
+2025-03-15 14:59:25,365 - INFO - Class 'Corn_(maize)___Northern_Leaf_Blight': Found 3816 image files
+2025-03-15 14:59:27,276 - INFO - Class 'Corn_(maize)___Northern_Leaf_Blight': 3816 valid images out of 3816
+2025-03-15 14:59:27,325 - INFO - Class 'Grape___Black_rot': Found 3776 image files
+2025-03-15 14:59:29,189 - INFO - Class 'Grape___Black_rot': 3776 valid images out of 3776
+2025-03-15 14:59:29,239 - INFO - Class 'Grape___Esca_(Black_Measles)': Found 3840 image files
+2025-03-15 14:59:31,146 - INFO - Class 'Grape___Esca_(Black_Measles)': 3840 valid images out of 3840
+2025-03-15 14:59:31,183 - INFO - Class 'Grape___healthy': Found 3384 image files
+2025-03-15 14:59:32,883 - INFO - Class 'Grape___healthy': 3384 valid images out of 3384
+2025-03-15 14:59:33,025 - INFO - Class 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': Found 3444 image files
+2025-03-15 14:59:34,758 - INFO - Class 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': 3444 valid images out of 3444
+2025-03-15 14:59:34,806 - INFO - Class 'Orange___Haunglongbing_(Citrus_greening)': Found 4020 image files
+2025-03-15 14:59:36,862 - INFO - Class 'Orange___Haunglongbing_(Citrus_greening)': 4020 valid images out of 4020
+2025-03-15 14:59:36,905 - INFO - Class 'Peach___Bacterial_spot': Found 3676 image files
+2025-03-15 14:59:38,716 - INFO - Class 'Peach___Bacterial_spot': 3676 valid images out of 3676
+2025-03-15 14:59:38,763 - INFO - Class 'Peach___healthy': Found 3456 image files
+2025-03-15 14:59:40,472 - INFO - Class 'Peach___healthy': 3456 valid images out of 3456
+2025-03-15 14:59:40,542 - INFO - Class 'Pepper,_bell___Bacterial_spot': Found 5420 image files
+2025-03-15 14:59:43,253 - INFO - Class 'Pepper,_bell___Bacterial_spot': 5420 valid images out of 5420
+2025-03-15 14:59:43,341 - INFO - Class 'Pepper,_bell___healthy': Found 6340 image files
+2025-03-15 14:59:46,485 - INFO - Class 'Pepper,_bell___healthy': 6340 valid images out of 6340
+2025-03-15 14:59:46,564 - INFO - Class 'Potato___Early_blight': Found 5478 image files
+2025-03-15 14:59:49,299 - INFO - Class 'Potato___Early_blight': 5478 valid images out of 5478
+2025-03-15 14:59:49,458 - INFO - Class 'Potato___healthy': Found 3942 image files
+2025-03-15 14:59:51,411 - INFO - Class 'Potato___healthy': 3942 valid images out of 3942
+2025-03-15 14:59:51,475 - INFO - Class 'Potato___Late_blight': Found 5266 image files
+2025-03-15 14:59:54,085 - INFO - Class 'Potato___Late_blight': 5266 valid images out of 5266
+2025-03-15 14:59:54,134 - INFO - Class 'Raspberry___healthy': Found 3562 image files
+2025-03-15 14:59:55,885 - INFO - Class 'Raspberry___healthy': 3562 valid images out of 3562
+2025-03-15 14:59:55,931 - INFO - Class 'Soybean___healthy': Found 4044 image files
+2025-03-15 14:59:57,911 - INFO - Class 'Soybean___healthy': 4044 valid images out of 4044
+2025-03-15 14:59:57,953 - INFO - Class 'Squash___Powdery_mildew': Found 3472 image files
+2025-03-15 14:59:59,657 - INFO - Class 'Squash___Powdery_mildew': 3472 valid images out of 3472
+2025-03-15 14:59:59,705 - INFO - Class 'Strawberry___healthy': Found 3648 image files
+2025-03-15 15:00:01,524 - INFO - Class 'Strawberry___healthy': 3648 valid images out of 3648
+2025-03-15 15:00:01,569 - INFO - Class 'Strawberry___Leaf_scorch': Found 3548 image files
+2025-03-15 15:00:03,315 - INFO - Class 'Strawberry___Leaf_scorch': 3548 valid images out of 3548
+2025-03-15 15:00:03,362 - INFO - Class 'Tomato___Bacterial_spot': Found 4088 image files
+2025-03-15 15:00:05,404 - INFO - Class 'Tomato___Bacterial_spot': 4088 valid images out of 4088
+2025-03-15 15:00:05,458 - INFO - Class 'Tomato___Early_blight': Found 4152 image files
+2025-03-15 15:00:07,509 - INFO - Class 'Tomato___Early_blight': 4152 valid images out of 4152
+2025-03-15 15:00:07,577 - INFO - Class 'Tomato___healthy': Found 4350 image files
+2025-03-15 15:00:09,723 - INFO - Class 'Tomato___healthy': 4350 valid images out of 4350
+2025-03-15 15:00:09,877 - INFO - Class 'Tomato___Late_blight': Found 4284 image files
+2025-03-15 15:00:12,173 - INFO - Class 'Tomato___Late_blight': 4284 valid images out of 4284
+2025-03-15 15:00:12,221 - INFO - Class 'Tomato___Leaf_Mold': Found 4064 image files
+2025-03-15 15:00:14,243 - INFO - Class 'Tomato___Leaf_Mold': 4064 valid images out of 4064
+2025-03-15 15:00:14,293 - INFO - Class 'Tomato___Septoria_leaf_spot': Found 4048 image files
+2025-03-15 15:00:16,282 - INFO - Class 'Tomato___Septoria_leaf_spot': 4048 valid images out of 4048
+2025-03-15 15:00:16,346 - INFO - Class 'Tomato___Spider_mites Two-spotted_spider_mite': Found 4012 image files
+2025-03-15 15:00:18,357 - INFO - Class 'Tomato___Spider_mites Two-spotted_spider_mite': 4012 valid images out of 4012
+2025-03-15 15:00:18,403 - INFO - Class 'Tomato___Target_Spot': Found 3654 image files
+2025-03-15 15:00:20,203 - INFO - Class 'Tomato___Target_Spot': 3654 valid images out of 3654
+2025-03-15 15:00:20,250 - INFO - Class 'Tomato___Tomato_mosaic_virus': Found 3580 image files
+2025-03-15 15:00:22,101 - INFO - Class 'Tomato___Tomato_mosaic_virus': 3580 valid images out of 3580
+2025-03-15 15:00:22,201 - INFO - Class 'Tomato___Tomato_Yellow_Leaf_Curl_Virus': Found 8470 image files
+2025-03-15 15:00:26,523 - INFO - Class 'Tomato___Tomato_Yellow_Leaf_Curl_Virus': 8470 valid images out of 8470
+2025-03-15 15:00:26,533 - INFO - Found 38 valid classes with images
+2025-03-15 15:00:26,533 - INFO - Class 'Apple___Apple_scab': 4162 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Apple___Black_rot': 3974 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Apple___Cedar_apple_rust': 3654 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Apple___healthy': 4016 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Blueberry___healthy': 3632 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Cherry_(including_sour)___Powdery_mildew': 3366 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Cherry_(including_sour)___healthy': 3652 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': 3284 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Corn_(maize)___Common_rust_': 3814 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Corn_(maize)___Northern_Leaf_Blight': 3816 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Corn_(maize)___healthy': 3718 valid images
+2025-03-15 15:00:26,533 - INFO - Class 'Grape___Black_rot': 3776 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Grape___Esca_(Black_Measles)': 3840 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': 3444 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Grape___healthy': 3384 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Orange___Haunglongbing_(Citrus_greening)': 4020 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Peach___Bacterial_spot': 3676 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Peach___healthy': 3456 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Pepper,_bell___Bacterial_spot': 5420 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Pepper,_bell___healthy': 6340 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Potato___Early_blight': 5478 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Potato___Late_blight': 5266 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Potato___healthy': 3942 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Raspberry___healthy': 3562 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Soybean___healthy': 4044 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Squash___Powdery_mildew': 3472 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Strawberry___Leaf_scorch': 3548 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Strawberry___healthy': 3648 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Bacterial_spot': 4088 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Early_blight': 4152 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Late_blight': 4284 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Leaf_Mold': 4064 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Septoria_leaf_spot': 4048 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Spider_mites Two-spotted_spider_mite': 4012 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Target_Spot': 3654 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Tomato_Yellow_Leaf_Curl_Virus': 8470 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___Tomato_mosaic_virus': 3580 valid images
+2025-03-15 15:00:26,539 - INFO - Class 'Tomato___healthy': 4350 valid images
+2025-03-15 15:00:26,539 - INFO - Number of training classes found: 38
+2025-03-15 15:00:26,539 - INFO - Training samples: 156106
+2025-03-15 15:00:26,539 - INFO - 
+Loading testing dataset...
+2025-03-15 15:00:26,539 - INFO - Loading dataset from: data\test
+2025-03-15 15:00:26,550 - INFO - Found 38 potential class directories
+2025-03-15 15:00:26,550 - INFO - Using predefined class list with 38 classes
+2025-03-15 15:00:26,555 - INFO - Class 'Apple___Apple_scab': Found 1008 image files
+2025-03-15 15:00:27,062 - INFO - Class 'Apple___Apple_scab': 1008 valid images out of 1008
+2025-03-15 15:00:27,078 - INFO - Class 'Apple___Black_rot': Found 994 image files
+2025-03-15 15:00:27,560 - INFO - Class 'Apple___Black_rot': 994 valid images out of 994
+2025-03-15 15:00:27,573 - INFO - Class 'Apple___Cedar_apple_rust': Found 880 image files
+2025-03-15 15:00:28,018 - INFO - Class 'Apple___Cedar_apple_rust': 880 valid images out of 880
+2025-03-15 15:00:28,032 - INFO - Class 'Apple___healthy': Found 1004 image files
+2025-03-15 15:00:28,511 - INFO - Class 'Apple___healthy': 1004 valid images out of 1004
+2025-03-15 15:00:28,522 - INFO - Class 'Blueberry___healthy': Found 908 image files
+2025-03-15 15:00:28,961 - INFO - Class 'Blueberry___healthy': 908 valid images out of 908
+2025-03-15 15:00:28,974 - INFO - Class 'Cherry_(including_sour)___healthy': Found 912 image files
+2025-03-15 15:00:29,426 - INFO - Class 'Cherry_(including_sour)___healthy': 912 valid images out of 912
+2025-03-15 15:00:29,537 - INFO - Class 'Cherry_(including_sour)___Powdery_mildew': Found 842 image files
+2025-03-15 15:00:29,959 - INFO - Class 'Cherry_(including_sour)___Powdery_mildew': 842 valid images out of 842
+2025-03-15 15:00:29,965 - INFO - Class 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': Found 820 image files
+2025-03-15 15:00:30,360 - INFO - Class 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': 820 valid images out of 820
+2025-03-15 15:00:30,383 - INFO - Class 'Corn_(maize)___Common_rust_': Found 954 image files
+2025-03-15 15:00:30,852 - INFO - Class 'Corn_(maize)___Common_rust_': 954 valid images out of 954
+2025-03-15 15:00:30,867 - INFO - Class 'Corn_(maize)___healthy': Found 930 image files
+2025-03-15 15:00:31,332 - INFO - Class 'Corn_(maize)___healthy': 930 valid images out of 930
+2025-03-15 15:00:31,346 - INFO - Class 'Corn_(maize)___Northern_Leaf_Blight': Found 954 image files
+2025-03-15 15:00:31,808 - INFO - Class 'Corn_(maize)___Northern_Leaf_Blight': 954 valid images out of 954
+2025-03-15 15:00:31,821 - INFO - Class 'Grape___Black_rot': Found 944 image files
+2025-03-15 15:00:32,299 - INFO - Class 'Grape___Black_rot': 944 valid images out of 944
+2025-03-15 15:00:32,311 - INFO - Class 'Grape___Esca_(Black_Measles)': Found 960 image files
+2025-03-15 15:00:32,775 - INFO - Class 'Grape___Esca_(Black_Measles)': 960 valid images out of 960
+2025-03-15 15:00:32,787 - INFO - Class 'Grape___healthy': Found 846 image files
+2025-03-15 15:00:33,195 - INFO - Class 'Grape___healthy': 846 valid images out of 846
+2025-03-15 15:00:33,207 - INFO - Class 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': Found 860 image files
+2025-03-15 15:00:33,647 - INFO - Class 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': 860 valid images out of 860
+2025-03-15 15:00:33,663 - INFO - Class 'Orange___Haunglongbing_(Citrus_greening)': Found 1006 image files
+2025-03-15 15:00:34,159 - INFO - Class 'Orange___Haunglongbing_(Citrus_greening)': 1006 valid images out of 1006
+2025-03-15 15:00:34,159 - INFO - Class 'Peach___Bacterial_spot': Found 918 image files
+2025-03-15 15:00:34,618 - INFO - Class 'Peach___Bacterial_spot': 918 valid images out of 918
+2025-03-15 15:00:34,634 - INFO - Class 'Peach___healthy': Found 864 image files
+2025-03-15 15:00:35,062 - INFO - Class 'Peach___healthy': 864 valid images out of 864
+2025-03-15 15:00:35,078 - INFO - Class 'Pepper,_bell___Bacterial_spot': Found 956 image files
+2025-03-15 15:00:35,550 - INFO - Class 'Pepper,_bell___Bacterial_spot': 956 valid images out of 956
+2025-03-15 15:00:35,563 - INFO - Class 'Pepper,_bell___healthy': Found 994 image files
+2025-03-15 15:00:36,042 - INFO - Class 'Pepper,_bell___healthy': 994 valid images out of 994
+2025-03-15 15:00:36,055 - INFO - Class 'Potato___Early_blight': Found 970 image files
+2025-03-15 15:00:36,538 - INFO - Class 'Potato___Early_blight': 970 valid images out of 970
+2025-03-15 15:00:36,552 - INFO - Class 'Potato___healthy': Found 912 image files
+2025-03-15 15:00:36,990 - INFO - Class 'Potato___healthy': 912 valid images out of 912
+2025-03-15 15:00:37,003 - INFO - Class 'Potato___Late_blight': Found 970 image files
+2025-03-15 15:00:37,457 - INFO - Class 'Potato___Late_blight': 970 valid images out of 970
+2025-03-15 15:00:37,473 - INFO - Class 'Raspberry___healthy': Found 890 image files
+2025-03-15 15:00:37,917 - INFO - Class 'Raspberry___healthy': 890 valid images out of 890
+2025-03-15 15:00:37,933 - INFO - Class 'Soybean___healthy': Found 1010 image files
+2025-03-15 15:00:38,425 - INFO - Class 'Soybean___healthy': 1010 valid images out of 1010
+2025-03-15 15:00:38,425 - INFO - Class 'Squash___Powdery_mildew': Found 868 image files
+2025-03-15 15:00:38,854 - INFO - Class 'Squash___Powdery_mildew': 868 valid images out of 868
+2025-03-15 15:00:38,870 - INFO - Class 'Strawberry___healthy': Found 912 image files
+2025-03-15 15:00:39,320 - INFO - Class 'Strawberry___healthy': 912 valid images out of 912
+2025-03-15 15:00:39,332 - INFO - Class 'Strawberry___Leaf_scorch': Found 888 image files
+2025-03-15 15:00:39,763 - INFO - Class 'Strawberry___Leaf_scorch': 888 valid images out of 888
+2025-03-15 15:00:39,782 - INFO - Class 'Tomato___Bacterial_spot': Found 1536 image files
+2025-03-15 15:00:40,553 - INFO - Class 'Tomato___Bacterial_spot': 1536 valid images out of 1536
+2025-03-15 15:00:40,570 - INFO - Class 'Tomato___Early_blight': Found 1288 image files
+2025-03-15 15:00:41,188 - INFO - Class 'Tomato___Early_blight': 1288 valid images out of 1288
+2025-03-15 15:00:41,207 - INFO - Class 'Tomato___healthy': Found 1476 image files
+2025-03-15 15:00:41,951 - INFO - Class 'Tomato___healthy': 1476 valid images out of 1476
+2025-03-15 15:00:41,970 - INFO - Class 'Tomato___Late_blight': Found 1528 image files
+2025-03-15 15:00:42,724 - INFO - Class 'Tomato___Late_blight': 1528 valid images out of 1528
+2025-03-15 15:00:42,741 - INFO - Class 'Tomato___Leaf_Mold': Found 1256 image files
+2025-03-15 15:00:43,362 - INFO - Class 'Tomato___Leaf_Mold': 1256 valid images out of 1256
+2025-03-15 15:00:43,378 - INFO - Class 'Tomato___Septoria_leaf_spot': Found 1442 image files
+2025-03-15 15:00:44,075 - INFO - Class 'Tomato___Septoria_leaf_spot': 1442 valid images out of 1442
+2025-03-15 15:00:44,091 - INFO - Class 'Tomato___Spider_mites Two-spotted_spider_mite': Found 1398 image files
+2025-03-15 15:00:44,797 - INFO - Class 'Tomato___Spider_mites Two-spotted_spider_mite': 1398 valid images out of 1398
+2025-03-15 15:00:44,815 - INFO - Class 'Tomato___Target_Spot': Found 914 image files
+2025-03-15 15:00:45,246 - INFO - Class 'Tomato___Target_Spot': 914 valid images out of 914
+2025-03-15 15:00:45,262 - INFO - Class 'Tomato___Tomato_mosaic_virus': Found 896 image files
+2025-03-15 15:00:45,714 - INFO - Class 'Tomato___Tomato_mosaic_virus': 896 valid images out of 896
+2025-03-15 15:00:45,740 - INFO - Class 'Tomato___Tomato_Yellow_Leaf_Curl_Virus': Found 2222 image files
+2025-03-15 15:00:46,826 - INFO - Class 'Tomato___Tomato_Yellow_Leaf_Curl_Virus': 2222 valid images out of 2222
+2025-03-15 15:00:46,828 - INFO - Found 38 valid classes with images
+2025-03-15 15:00:46,829 - INFO - Class 'Apple___Apple_scab': 1008 valid images
+2025-03-15 15:00:46,829 - INFO - Class 'Apple___Black_rot': 994 valid images
+2025-03-15 15:00:46,829 - INFO - Class 'Apple___Cedar_apple_rust': 880 valid images
+2025-03-15 15:00:46,829 - INFO - Class 'Apple___healthy': 1004 valid images
+2025-03-15 15:00:46,829 - INFO - Class 'Blueberry___healthy': 908 valid images
+2025-03-15 15:00:46,830 - INFO - Class 'Cherry_(including_sour)___Powdery_mildew': 842 valid images
+2025-03-15 15:00:46,830 - INFO - Class 'Cherry_(including_sour)___healthy': 912 valid images
+2025-03-15 15:00:46,830 - INFO - Class 'Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot': 820 valid images
+2025-03-15 15:00:46,830 - INFO - Class 'Corn_(maize)___Common_rust_': 954 valid images
+2025-03-15 15:00:46,830 - INFO - Class 'Corn_(maize)___Northern_Leaf_Blight': 954 valid images
+2025-03-15 15:00:46,831 - INFO - Class 'Corn_(maize)___healthy': 930 valid images
+2025-03-15 15:00:46,831 - INFO - Class 'Grape___Black_rot': 944 valid images
+2025-03-15 15:00:46,831 - INFO - Class 'Grape___Esca_(Black_Measles)': 960 valid images
+2025-03-15 15:00:46,831 - INFO - Class 'Grape___Leaf_blight_(Isariopsis_Leaf_Spot)': 860 valid images
+2025-03-15 15:00:46,831 - INFO - Class 'Grape___healthy': 846 valid images
+2025-03-15 15:00:46,832 - INFO - Class 'Orange___Haunglongbing_(Citrus_greening)': 1006 valid images
+2025-03-15 15:00:46,832 - INFO - Class 'Peach___Bacterial_spot': 918 valid images
+2025-03-15 15:00:46,832 - INFO - Class 'Peach___healthy': 864 valid images
+2025-03-15 15:00:46,832 - INFO - Class 'Pepper,_bell___Bacterial_spot': 956 valid images
+2025-03-15 15:00:46,832 - INFO - Class 'Pepper,_bell___healthy': 994 valid images
+2025-03-15 15:00:46,833 - INFO - Class 'Potato___Early_blight': 970 valid images
+2025-03-15 15:00:46,833 - INFO - Class 'Potato___Late_blight': 970 valid images
+2025-03-15 15:00:46,833 - INFO - Class 'Potato___healthy': 912 valid images
+2025-03-15 15:00:46,833 - INFO - Class 'Raspberry___healthy': 890 valid images
+2025-03-15 15:00:46,833 - INFO - Class 'Soybean___healthy': 1010 valid images
+2025-03-15 15:00:46,833 - INFO - Class 'Squash___Powdery_mildew': 868 valid images
+2025-03-15 15:00:46,834 - INFO - Class 'Strawberry___Leaf_scorch': 888 valid images
+2025-03-15 15:00:46,834 - INFO - Class 'Strawberry___healthy': 912 valid images
+2025-03-15 15:00:46,834 - INFO - Class 'Tomato___Bacterial_spot': 1536 valid images
+2025-03-15 15:00:46,834 - INFO - Class 'Tomato___Early_blight': 1288 valid images
+2025-03-15 15:00:46,834 - INFO - Class 'Tomato___Late_blight': 1528 valid images
+2025-03-15 15:00:46,834 - INFO - Class 'Tomato___Leaf_Mold': 1256 valid images
+2025-03-15 15:00:46,835 - INFO - Class 'Tomato___Septoria_leaf_spot': 1442 valid images
+2025-03-15 15:00:46,835 - INFO - Class 'Tomato___Spider_mites Two-spotted_spider_mite': 1398 valid images
+2025-03-15 15:00:46,835 - INFO - Class 'Tomato___Target_Spot': 914 valid images
+2025-03-15 15:00:46,835 - INFO - Class 'Tomato___Tomato_Yellow_Leaf_Curl_Virus': 2222 valid images
+2025-03-15 15:00:46,835 - INFO - Class 'Tomato___Tomato_mosaic_virus': 896 valid images
+2025-03-15 15:00:46,835 - INFO - Class 'Tomato___healthy': 1476 valid images
+2025-03-15 15:00:46,836 - INFO - Number of testing classes found: 38
+2025-03-15 15:00:46,836 - INFO - Testing samples: 39930
+2025-03-15 15:00:46,837 - INFO - Using unified class list with 38 classes
