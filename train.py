@@ -106,7 +106,11 @@ def train_model(model, train_loader, val_loader, num_epochs=30, class_names=None
 
     criterion = torch.nn.CrossEntropyLoss()
     optimizer = AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01)
-    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3, verbose=True)
+    scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3)
+
+    # Instead of relying on verbose=True, manually log learning rate
+    logging.info(f"Learning rate at start: {scheduler.optimizer.param_groups[0]['lr']}")
+
 
     # For tracking metrics
     history = {
@@ -429,18 +433,18 @@ def main():
     logging.info(f"Using batch size of {batch_size}")
 
     train_loader = torch.utils.data.DataLoader(
-        train_dataset, 
-        batch_size=batch_size, 
-        sampler=sampler, 
-        num_workers=2 if torch.cuda.is_available() else 0, 
-        pin_memory=torch.cuda.is_available()
-    )
+    train_dataset, 
+    batch_size=batch_size, 
+    sampler=sampler, 
+    num_workers=0,  # Set to 0 for debugging. Increase later if needed.
+    pin_memory=torch.cuda.is_available()
+)
 
     val_loader = torch.utils.data.DataLoader(
         test_dataset, 
         batch_size=batch_size, 
         shuffle=False, 
-        num_workers=2 if torch.cuda.is_available() else 0, 
+        num_workers=0,
         pin_memory=torch.cuda.is_available()
     )
 

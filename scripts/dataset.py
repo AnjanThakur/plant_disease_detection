@@ -310,6 +310,9 @@ class CannyEdgeDetection:
             # Return blank image in case of error
             return Image.fromarray(np.zeros((224, 224, 3), dtype=np.uint8))
     
+def identity_transform(x):
+    return x
+
 def get_transforms(use_canny=False):  # Changed default to False to avoid potential issues
     """
     Get transforms for training and validation.
@@ -319,10 +322,10 @@ def get_transforms(use_canny=False):  # Changed default to False to avoid potent
     if use_canny:
         edge_transform = CannyEdgeDetection()
     else:
-        edge_transform = transforms.Lambda(lambda x: x)  # Identity transform
+        edge_transform = transforms.Lambda(identity_transform)  # Use named function
 
     train_transform = transforms.Compose([
-        edge_transform,  # Apply Canny edge detection if enabled
+        edge_transform,
         transforms.RandomHorizontalFlip(),
         transforms.RandomRotation(10),
         transforms.RandomResizedCrop(224),
@@ -331,14 +334,15 @@ def get_transforms(use_canny=False):  # Changed default to False to avoid potent
     ])
 
     val_transform = transforms.Compose([
-        edge_transform,  # Apply Canny edge detection if enabled
-        transforms.Resize(256),  # Resize to slightly larger than crop size
+        edge_transform,
+        transforms.Resize(256),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
 
     return train_transform, val_transform
+
 
 def get_all_classes(train_dir, test_dir):
     """

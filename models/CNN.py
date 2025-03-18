@@ -8,10 +8,10 @@ class CNN(nn.Module):
 
         # Using pre-trained ResNet50 as feature extractor
         try:
-            resnet = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
+            resnet = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
         except AttributeError:
-            # Fallback for older PyTorch versions
             resnet = models.resnet50(pretrained=True)
+
 
         # Remove the fully connected layers (classifier part) from ResNet
         self.features = nn.Sequential(*list(resnet.children())[:-1])

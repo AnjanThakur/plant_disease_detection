@@ -330,9 +330,16 @@ def main():
         logging.info(f"Class names loaded from dataset: {class_names}")
 
     # Check if model file exists
-    if not os.path.exists(model_path):
-        logging.error(f"Model file not found: {model_path}")
-        return
+    if os.path.exists(model_path) and os.path.getsize(model_path) > 0:
+        try:
+            model.load_state_dict(torch.load(model_path, map_location=device))
+            logging.info("Model loaded successfully!")
+        except Exception as e:
+            logging.error(f"Failed to load model: {e}")
+            exit()
+    else:
+        logging.error("Model file is missing or empty. Ensure training was successful before running validation.")
+        exit()
 
     # Determine device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
