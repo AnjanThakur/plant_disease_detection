@@ -1,49 +1,60 @@
 import os
+import cv2
+import torch
 from torch.utils.data import Dataset
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-import cv2
-import torch
+import logging
 
-
-class PlantDataset(torch.utils.data.Dataset):
+class PlantDataset(Dataset):
     def __init__(self, data_path, transform=None, class_list=None):
         self.data_path = data_path
         self.transform = transform
         self.image_paths = []
         self.labels = []
-        self.classes = []
-
-        # Create label map dynamically or from class_list
-        if class_list:
-            self.classes = class_list
-        else:
-            self.classes = sorted([d.name for d in os.scandir(data_path) if d.is_dir()])
-
+        self.classes = class_list if class_list else sorted([d.name for d in os.scandir(data_path) if d.is_dir()])
         self.label_map = {class_name: idx for idx, class_name in enumerate(self.classes)}
 
+        valid_extensions = (".jpg", ".jpeg", ".png")
         for class_folder in self.classes:
             class_folder_path = os.path.join(data_path, class_folder)
+            if not os.path.exists(class_folder_path):
+                print(f"⚠️ Warning: Class folder not found - {class_folder_path}")
+                continue
+
             for img_name in os.listdir(class_folder_path):
-                img_path = os.path.join(class_folder_path, img_name)
-                self.image_paths.append(img_path)
-                self.labels.append(class_folder)
+                if img_name.lower().endswith(valid_extensions):
+                    img_path = os.path.join(class_folder_path, img_name)
+                    if os.path.isfile(img_path):
+                        self.image_paths.append(img_path)
+                        self.labels.append(self.label_map[class_folder])
+
+        print(f"✅ Loaded {len(self.image_paths)} images from {len(self.classes)} classes.")
 
     def __len__(self):
         return len(self.image_paths)
 
     def __getitem__(self, idx):
         img_path = self.image_paths[idx]
-        image = cv2.imread(img_path)
+
+        if not os.path.exists(img_path):
+            logging.warning(f"Skipping missing image: {img_path}")
+            return self.__getitem__((idx + 1) % len(self))
+
+        image = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)
+        if image is None:
+            logging.warning(f"Skipping corrupt image: {img_path}")
+            return self.__getitem__((idx + 1) % len(self))
+
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
-        label = self.label_map[self.labels[idx]]
-
+        label = self.labels[idx]
+        
         if self.transform:
             augmented = self.transform(image=image)
-            image = augmented['image']
+            image = augmented["image"]
+        
+        return image, label, img_path  # Ensure paths are returned
 
-        return image, label
 
 def get_transforms():
     train_transform = A.Compose([
@@ -63,6 +74,13 @@ def get_transforms():
 
     return train_transform, val_transform
 
-def get_all_classes(train_path, test_path):
-    all_classes = sorted([d.name for d in os.scandir(train_path) if d.is_dir()])
-    return all_classes
+def get_all_classes(train_path, test_path, model_path):
+    class_names_path = os.path.join(model_path, "class_names.pt")
+
+    if os.path.exists(class_names_path):
+        return torch.load(class_names_path)
+    
+    # If not found, extract from dataset
+    classes = sorted([d.name for d in os.scandir(train_path) if d.is_dir()])
+    torch.save(classes, class_names_path)  # Save for future consistency
+    return classes

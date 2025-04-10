@@ -1,0 +1,8 @@
+encrypted = "ºq»Ó~¡¼mÆBmÇ"
+encrypted_bytes = [ord(c) for c in encrypted]
+
+for key in range(256):
+    decrypted = ''.join(chr(b ^ key) for b in encrypted_bytes)
+    # Check if it's mostly printable characters
+    if all(32 <= ord(c) <= 126 for c in decrypted):
+        print(f"Key: {key} -> {decrypted}")
