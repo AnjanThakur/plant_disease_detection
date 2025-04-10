@@ -16,8 +16,7 @@ logging.basicConfig(
     handlers=[logging.FileHandler("training.log"), logging.StreamHandler()],
 )
 
-
-# Custom imports
+# Custom imports           
 from models.CNN import CNN
 from scripts.dataset import PlantDataset, get_transforms, get_all_classes
 
