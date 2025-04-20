@@ -54,4 +54,4 @@ def move_unique_to_test(num_per_class=100):
     print(f"\n🎉 Done! Total images moved: {moved_total}")
 
 if __name__ == "__main__":
-    move_unique_to_test(num_per_class=100)
+    move_unique_to_test(num_per_class=300)

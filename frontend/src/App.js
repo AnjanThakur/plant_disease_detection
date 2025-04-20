@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
-import { FaCloudUploadAlt, FaSearch, FaTimesCircle, FaLeaf, FaExclamationTriangle } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaSearch, FaTimesCircle, FaLeaf, FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -96,11 +96,11 @@ function App() {
             </div>
           )}
           <button
-            className="predict-button"
+            className={`predict-button ${loading ? 'loading' : ''}`}
             onClick={handleSubmit}
             disabled={!selectedImage || loading}
           >
-            {loading ? <FaSearch className="loading-icon" /> : <FaSearch />} Predict Disease
+            {loading ? <FaSearch className="loading-icon spinning" /> : <FaSearch />} Predict Disease
           </button>
           {error && (
             <div className="error-container">
@@ -111,24 +111,36 @@ function App() {
         </section>
 
         {predictionResult && (
-          <section className="prediction-section">
-            <h2><FaLeaf className="result-icon" /> Prediction Result</h2>
+          <section className={`prediction-section ${predictionResult ? 'show' : ''}`}>
+            <h2><FaLeaf className="result-icon" /> Prediction Result <FaCheckCircle className="success-icon" /></h2>
             <div className="result-item">
               <strong>Predicted Class:</strong>
-              <p>{predictionResult.predicted_class}</p>
+              <p className="predicted-class">{predictionResult.predicted_class}</p>
             </div>
-            <div className="result-item">
-              <strong>Title:</strong>
-              <p>{predictionResult.title}</p>
-            </div>
-            <div className="result-item description">
-              <strong>Description:</strong>
-              <p>{predictionResult.description}</p>
-            </div>
-            <div className="result-item prevent">
-              <strong>Possible Steps:</strong>
-              <p>{predictionResult.prevent}</p>
-            </div>
+            {predictionResult.confidence && (
+              <div className="result-item">
+                <strong>Confidence:</strong>
+                <p>{(predictionResult.confidence * 100).toFixed(2)}%</p>
+              </div>
+            )}
+            {predictionResult.title && (
+              <div className="result-item">
+                <strong>Title:</strong>
+                <p>{predictionResult.title}</p>
+              </div>
+            )}
+            {predictionResult.description && (
+              <div className="result-item description">
+                <strong>Description:</strong>
+                <p>{predictionResult.description}</p>
+              </div>
+            )}
+            {predictionResult.prevent && (
+              <div className="result-item prevent">
+                <strong>Possible Steps:</strong>
+                <p>{predictionResult.prevent}</p>
+              </div>
+            )}
             {predictionResult.image_url && (
               <div className="result-item disease-image">
                 <h3>Disease Image:</h3>

@@ -12,6 +12,7 @@ import uvicorn
 import logging
 import torch.nn as nn
 from torchvision import models
+import torch.nn.functional as F
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -30,7 +31,7 @@ class CNN(nn.Module):
         super(CNN, self).__init__()
         # Use the same model architecture
         self.features = models.resnet50(weights=None)  # We'll load weights from saved model
-        
+
         in_features = self.features.fc.in_features
         self.features.fc = nn.Sequential(
             nn.Linear(in_features, 512),
@@ -41,7 +42,7 @@ class CNN(nn.Module):
 
     def forward(self, x):
         return self.features(x)
-        
+
     def load_weights(self, model_path, device="cpu"):
         state_dict = torch.load(model_path, map_location=device)
         model_keys = list(state_dict.keys())
@@ -58,10 +59,10 @@ class CNN(nn.Module):
             print(f"⚠️ Adjusting FC layer from {loaded_fc_out} to {expected_fc_out}")
             in_features = self.features.fc[0].in_features
             self.features.fc = nn.Sequential(
-            nn.Linear(in_features, 512),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            nn.Linear(512, expected_fc_out)
+                nn.Linear(in_features, 512),
+                nn.ReLU(),
+                nn.Dropout(0.5),
+                nn.Linear(512, expected_fc_out)
             )
         else:
             print("No FC layer weights found in state_dict.")
@@ -79,24 +80,24 @@ def load_model():
             if not os.path.exists(file_path):
                 logger.error(f"File not found: {file_path}")
                 raise FileNotFoundError(f"Required file not found: {file_path}")
-        
+
         class_names = torch.load(CLASS_NAMES_PATH)
         num_classes = len(class_names)
-        
+
         # Create model with the correct architecture
         model = CNN(num_classes=num_classes)
-        
+
         # Use the custom load_weights method
         model.load_weights(MODEL_PATH, device=device)
         model.to(device)
         model.eval()
-        
+
         disease_info = pd.read_csv(DISEASE_INFO_PATH)
         supplement_info = pd.read_csv(SUPPLEMENT_INFO_PATH)
-        
+
         logger.info("Model and data loaded successfully")
         return model, class_names, disease_info, supplement_info, device
-    
+
     except Exception as e:
         logger.error(f"Error loading model or data: {e}")
         raise
@@ -122,8 +123,9 @@ def transform_image(image: Image.Image):
 def predict_class(image_tensor):
     with torch.no_grad():
         outputs = model(image_tensor.to(device))
-        _, predicted = torch.max(outputs, 1)
-    return predicted.item()
+        probabilities = F.softmax(outputs, dim=1)
+        confidence, predicted = torch.max(probabilities, 1)
+    return predicted.item(), confidence.item()
 
 # === DEPENDENCY INJECTION ===
 def get_application_components():
@@ -172,36 +174,37 @@ async def predict(
             image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Invalid image: {e}")
-        
+
         # Transform and predict
         tensor = transform_image(image)
-        pred_index = predict_class(tensor)
-        
+        pred_index, confidence = predict_class(tensor)
+
         # Get prediction results
         class_names = components["class_names"]
         disease_info = components["disease_info"]
         supplement_info = components["supplement_info"]
-        
+
         if 0 <= pred_index < len(class_names):
             predicted_class_name = class_names[pred_index]
-            
+
             # Get disease information
             disease_rows = disease_info[disease_info['disease_name'] == predicted_class_name]
             if disease_rows.empty:
                 raise HTTPException(status_code=404, detail=f"Disease info not found for: {predicted_class_name}")
-            
+
             disease_row = disease_rows.iloc[0]
-            
+
             # Get supplement information
             supplement_rows = supplement_info[supplement_info['supplement name'] == disease_row['supplement name']]
             if supplement_rows.empty:
                 raise HTTPException(status_code=404, detail=f"Supplement info not found for: {disease_row['supplement name']}")
-            
+
             supplement_row = supplement_rows.iloc[0]
-            
+
             # Prepare result
             result = {
                 "predicted_class": predicted_class_name,
+                "confidence": confidence,
                 "title": disease_row['disease_name'],
                 "description": disease_row['description'],
                 "prevent": disease_row['Possible Steps'],
@@ -222,7 +225,7 @@ async def predict(
 
 # === RUN APP LOCALLY ===
 if __name__ == "__main__":
-  if model is None or class_names is None or disease_info is None or supplement_info is None:
-      logger.critical("Cannot start application - initialization failed")
-      exit(1)
-  uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    if model is None or class_names is None or disease_info is None or supplement_info is None:
+        logger.critical("Cannot start application - initialization failed")
+        exit(1)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
