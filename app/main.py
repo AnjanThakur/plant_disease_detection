@@ -13,6 +13,7 @@ import logging
 import torch.nn as nn
 from torchvision import models
 import torch.nn.functional as F
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -29,9 +30,7 @@ SUPPLEMENT_INFO_PATH = os.path.join(BASE_DIR, "files", "supplement_info.csv")
 class CNN(nn.Module):
     def __init__(self, num_classes):
         super(CNN, self).__init__()
-        # Use the same model architecture
-        self.features = models.resnet50(weights=None)  # We'll load weights from saved model
-
+        self.features = models.resnet50(pretrained=True)
         in_features = self.features.fc.in_features
         self.features.fc = nn.Sequential(
             nn.Linear(in_features, 512),
@@ -46,7 +45,6 @@ class CNN(nn.Module):
     def load_weights(self, model_path, device="cpu"):
         state_dict = torch.load(model_path, map_location=device)
         model_keys = list(state_dict.keys())
-
         if "model_state_dict" in model_keys:
             state_dict = state_dict["model_state_dict"]
 
@@ -64,8 +62,6 @@ class CNN(nn.Module):
                 nn.Dropout(0.5),
                 nn.Linear(512, expected_fc_out)
             )
-        else:
-            print("No FC layer weights found in state_dict.")
         self.load_state_dict(state_dict)
 
 # === MODEL AND DATA LOADING ===
@@ -75,7 +71,6 @@ def get_device():
 def load_model():
     device = get_device()
     try:
-        # Check if files exist
         for file_path in [MODEL_PATH, CLASS_NAMES_PATH, DISEASE_INFO_PATH, SUPPLEMENT_INFO_PATH]:
             if not os.path.exists(file_path):
                 logger.error(f"File not found: {file_path}")
@@ -84,10 +79,7 @@ def load_model():
         class_names = torch.load(CLASS_NAMES_PATH)
         num_classes = len(class_names)
 
-        # Create model with the correct architecture
         model = CNN(num_classes=num_classes)
-
-        # Use the custom load_weights method
         model.load_weights(MODEL_PATH, device=device)
         model.to(device)
         model.eval()
@@ -97,7 +89,6 @@ def load_model():
 
         logger.info("Model and data loaded successfully")
         return model, class_names, disease_info, supplement_info, device
-
     except Exception as e:
         logger.error(f"Error loading model or data: {e}")
         raise
@@ -142,7 +133,7 @@ app = FastAPI(title="Tomato Disease Detection API")
 # Enable CORS for frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # You might want to restrict this in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -163,23 +154,19 @@ async def predict(
     file: UploadFile = File(...),
     components: dict = Depends(get_application_components)
 ):
-    # Validate image format
     if not file.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="Invalid image format")
 
     try:
-        # Read and process the image
         image_bytes = await file.read()
         try:
             image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Invalid image: {e}")
 
-        # Transform and predict
         tensor = transform_image(image)
         pred_index, confidence = predict_class(tensor)
 
-        # Get prediction results
         class_names = components["class_names"]
         disease_info = components["disease_info"]
         supplement_info = components["supplement_info"]
@@ -187,21 +174,18 @@ async def predict(
         if 0 <= pred_index < len(class_names):
             predicted_class_name = class_names[pred_index]
 
-            # Get disease information
             disease_rows = disease_info[disease_info['disease_name'] == predicted_class_name]
             if disease_rows.empty:
                 raise HTTPException(status_code=404, detail=f"Disease info not found for: {predicted_class_name}")
 
             disease_row = disease_rows.iloc[0]
 
-            # Get supplement information
             supplement_rows = supplement_info[supplement_info['supplement name'] == disease_row['supplement name']]
             if supplement_rows.empty:
                 raise HTTPException(status_code=404, detail=f"Supplement info not found for: {disease_row['supplement name']}")
 
             supplement_row = supplement_rows.iloc[0]
 
-            # Prepare result
             result = {
                 "predicted_class": predicted_class_name,
                 "confidence": confidence,

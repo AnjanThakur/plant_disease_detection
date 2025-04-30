@@ -1,5 +1,5 @@
 import torch
-from sklearn.metrics import classification_report, confusion_matrix #,ConfusionMatrixDisplay
+from sklearn.metrics import classification_report, confusion_matrix, precision_recall_fscore_support
 import logging
 import os
 from tqdm import tqdm
@@ -8,6 +8,7 @@ import argparse
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import torch.nn.functional as F
 
 def setup_logging():
     """Configure logging settings."""
@@ -26,6 +27,9 @@ def validate_model(test_loader, model, class_names, device="cpu", save_dir="outp
 
     all_preds, all_labels, all_confidences, all_paths = [], [], [], []
     class_correct, class_total = {i: 0 for i in range(len(class_names))}, {i: 0 for i in range(len(class_names))}
+
+    total_loss = 0.0
+    all_losses = []
 
     with torch.no_grad():
         for batch in tqdm(test_loader, desc="Validating"):
@@ -49,10 +53,15 @@ def validate_model(test_loader, model, class_names, device="cpu", save_dir="outp
                 logging.error("Empty output from model! Skipping batch.")
                 continue
 
-            probabilities = torch.nn.functional.softmax(outputs, dim=1)
+            probabilities = F.softmax(outputs, dim=1)
             if torch.isnan(probabilities).any():
                 logging.error("NaN values found in model output! Skipping batch.")
                 continue
+
+            # Calculate loss
+            loss = F.cross_entropy(outputs, labels)
+            total_loss += loss.item()
+            all_losses.append(loss.item())
 
             confidence_values, predicted = torch.max(probabilities, 1)
             all_preds.extend(predicted.cpu().numpy())
@@ -76,6 +85,10 @@ def validate_model(test_loader, model, class_names, device="cpu", save_dir="outp
     accuracy = sum(class_correct.values()) / max(sum(class_total.values()), 1)
     logging.info(f"Overall Accuracy: {accuracy * 100:.2f}%")
 
+    # Average loss
+    avg_loss = total_loss / len(all_losses)
+    logging.info(f"Average Loss: {avg_loss:.4f}")
+
     accuracy_df = pd.DataFrame([
         {"class": class_names[i], "accuracy": class_correct.get(i, 0) / max(class_total.get(i, 1), 1) * 100,
          "correct": class_correct.get(i, 0), "total": class_total.get(i, 0)}
@@ -92,6 +105,10 @@ def validate_model(test_loader, model, class_names, device="cpu", save_dir="outp
     except Exception as e:
         logging.error(f"Error generating classification report: {e}")
 
+    # Calculate precision, recall, f1-score
+    precision, recall, f1, _ = precision_recall_fscore_support(all_labels, all_preds, average='weighted')
+    logging.info(f"Precision: {precision:.4f}, Recall: {recall:.4f}, F1: {f1:.4f}")
+
     # === Plot and save accuracy bar graph ===
     try:
         plt.figure(figsize=(12, 6))
@@ -105,8 +122,8 @@ def validate_model(test_loader, model, class_names, device="cpu", save_dir="outp
         plt.close()
     except Exception as e:
         logging.error(f"Failed to plot class-wise accuracy: {e}")
-    
-        # === Plot and save confusion matrix ===
+
+    # === Plot and save confusion matrix ===
     try:
         cm = confusion_matrix(all_labels, all_preds)
         cm_norm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
@@ -157,7 +174,7 @@ def main():
         pin_memory=torch.cuda.is_available(),
     )
 
-    class_names_path = os.path.join(os.path.dirname(model_path), "class_tomato_names.pt")
+    class_names_path = os.path.join(os.path.dirname(model_path), "class_names.pt")
     if os.path.exists(class_names_path):
         try:
             class_names = torch.load(class_names_path)

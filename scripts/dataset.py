@@ -5,7 +5,6 @@ from torch.utils.data import Dataset
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 import logging
-
 class PlantDataset(Dataset):
     def __init__(self, data_path, transform=None, class_list=None):
         self.data_path = data_path
@@ -53,15 +52,29 @@ class PlantDataset(Dataset):
             augmented = self.transform(image=image)
             image = augmented["image"]
         
-        return image, label, img_path  # Ensure paths are returned
-
+        return image, label  # Return just image and label
 
 def get_transforms():
     train_transform = A.Compose([
+        A.RandomResizedCrop(224, 224, scale=(0.6, 1.0), p=1.0),
         A.HorizontalFlip(p=0.5),
-        A.RandomBrightnessContrast(p=0.2),
-        A.Rotate(limit=20, p=0.5),
-        A.RandomResizedCrop(224, 224, scale=(0.8, 1.0), p=1),
+        A.VerticalFlip(p=0.3),
+        A.RandomRotate90(p=0.5),
+        A.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1, p=0.5),
+        A.GaussianBlur(blur_limit=(3, 7), p=0.3),
+        A.GaussNoise(var_limit=(10.0, 50.0), p=0.3),
+        A.RandomShadow(p=0.3),
+        A.ElasticTransform(alpha=1, sigma=50, p=0.3),
+        A.Perspective(scale=(0.05, 0.1), p=0.3),
+        A.CoarseDropout(max_holes=8, max_height=32, max_width=32, fill_value=0, p=0.5),
+
+        # More robust augmentations
+        A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p=0.5),
+        A.MotionBlur(blur_limit=7, p=0.5),
+        A.ISONoise(p=0.2),
+        A.RandomGamma(gamma_limit=(50, 150), p=0.5),
+        
+        # Normalize for pre-trained models like ResNet
         A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
         ToTensorV2(),
     ])
@@ -74,13 +87,4 @@ def get_transforms():
 
     return train_transform, val_transform
 
-def get_all_classes(train_path, test_path, model_path):
-    class_names_path = os.path.join(model_path, "class_names.pt")
 
-    if os.path.exists(class_names_path):
-        return torch.load(class_names_path)
-    
-    # If not found, extract from dataset
-    classes = sorted([d.name for d in os.scandir(train_path) if d.is_dir()])
-    torch.save(classes, class_names_path)  # Save for future consistency
-    return classes

@@ -1,12 +1,12 @@
 class,accuracy,correct,total
-Tomato_Powerdly_mildew,99.31972789115646,146,147
-Tomato___Bacterial_spot,99.0,99,100
-Tomato___Early_blight,99.0,99,100
-Tomato___Late_blight,100.0,100,100
-Tomato___Leaf_Mold,100.0,100,100
-Tomato___Septoria_leaf_spot,100.0,100,100
-Tomato___Spider_mites Two-spotted_spider_mite,97.0,97,100
-Tomato___Target_Spot,100.0,100,100
-Tomato___Tomato_Yellow_Leaf_Curl_Virus,100.0,579,579
-Tomato___Tomato_mosaic_virus,100.0,100,100
-Tomato___healthy,100.0,100,100
+Tomato_Powderly_mildew,76.28635346756153,341,447
+Tomato___Bacterial_spot,98.25,393,400
+Tomato___Early_blight,92.75,371,400
+Tomato___Late_blight,98.5,394,400
+Tomato___Leaf_Mold,99.75,399,400
+Tomato___Septoria_leaf_spot,100.0,400,400
+Tomato___Spider_mites Two-spotted_spider_mite,98.75,395,400
+Tomato___Target_Spot,97.5,390,400
+Tomato___Tomato_Yellow_Leaf_Curl_Virus,98.0,392,400
+Tomato___Tomato_mosaic_virus,98.75,395,400
+Tomato___healthy,100.0,400,400

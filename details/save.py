@@ -14,4 +14,4 @@ class_names = [
     "Tomato Healthy"
 ]
 
-torch.save(class_names, "E:/plant_disease_detection/app/files/class_tomato_names.pt")
+torch.save(class_names, "./../models/class_names.pt")
